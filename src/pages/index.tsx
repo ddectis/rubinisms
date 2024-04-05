@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import styles from "@/styles/Home.module.css";
+import Intro from "@/components/Intro"
 
-interface Quote{
+interface Quote {
    text: string;
 }
 
@@ -28,12 +29,12 @@ const JsonParserComponent = () => {
       loadJsonFile();
    }, []); // Empty dependency array ensures it runs only once on mount
 
-   const handleRandomQuote = () => {
+   const getRandomQuote = () => {
       if (quotes.length > 0) {
          // Check if quotes are loaded before accessing them
          setQuoteIndex(Math.floor(Math.random() * quotes.length));
          setSelectedQuote(quotes[quoteIndex]);
-         setQuotesLoaded(true)
+         setQuotesLoaded(true);
          window.scrollTo({
             top: 0,
             behavior: "smooth",
@@ -49,20 +50,25 @@ const JsonParserComponent = () => {
             <>
                <div className={styles.quote}>
                   <div className={styles.quoteText}>
-                     <h2 className={styles.quoteIndex}>#{quoteIndex}</h2>
+                     <div className={styles.quoteHeading}>
+                        <h2>Rubinisms</h2>
+                        <h3 className={styles.quoteIndex}>
+                           {quoteIndex} of {quotes.length}
+                        </h3>
+                     </div>
+
                      {selectedQuote && <p>{selectedQuote.text}</p>}
                   </div>
                </div>
             </>
          ) : (
-            <p>When I read <a href="https://www.penguinrandomhouse.com/books/717356/the-creative-act-by-rick-rubin/" target="_blank">The Creative Act: A Way of Being by Rick Ruben</a></p>
+            <>
+               <Intro/>
+            </>
          )}
-         <button
-                  className={styles.getQuoteButton}
-                  onClick={handleRandomQuote}
-               >
-                  Grab Random Quote
-               </button>
+         <button className={styles.getRandomQuoteButton} onClick={getRandomQuote}>
+            Grab Random Quote
+         </button>
       </div>
    );
 };
