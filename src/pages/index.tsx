@@ -51,7 +51,7 @@ const JsonParserComponent = () => {
                </div>
             </>
          ) : (
-            <p>When I read <a href="https://www.penguinrandomhouse.com/books/717356/the-creative-act-by-rick-rubin/" target="_blank">"The Creative Act: A Way of Being" by Rick Ruben</a></p>
+            <p>When I read <a href="https://www.penguinrandomhouse.com/books/717356/the-creative-act-by-rick-rubin/" target="_blank">The Creative Act: A Way of Being by Rick Ruben</a></p>
          )}
          <button
                   className={styles.getQuoteButton}
