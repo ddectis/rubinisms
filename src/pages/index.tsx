@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import styles from "@/styles/Home.module.css";
 
+interface Quote{
+   text: string;
+}
+
 const JsonParserComponent = () => {
-   const [quotes, setQuotes] = useState([]);
-   const [selectedQuote, setSelectedQuote] = useState("");
+   const [quotes, setQuotes] = useState<Quote[]>([]);
+   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
    const [quoteIndex, setQuoteIndex] = useState(0);
    const [quotesLoaded, setQuotesLoaded] = useState(false);
 
@@ -46,7 +50,7 @@ const JsonParserComponent = () => {
                <div className={styles.quote}>
                   <div className={styles.quoteText}>
                      <h2 className={styles.quoteIndex}>#{quoteIndex}</h2>
-                     <p>{selectedQuote.text}</p>
+                     {selectedQuote && <p>{selectedQuote.text}</p>}
                   </div>
                </div>
             </>
