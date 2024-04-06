@@ -51,6 +51,7 @@ const JsonParserComponent = () => {
          setQuoteIndex(0)
       }
       setSelectedQuote(quotes[quoteIndex])
+      setQuotesLoaded(true);
    };
 
    const getPreviousQuote = () => {
@@ -60,6 +61,7 @@ const JsonParserComponent = () => {
          setQuoteIndex(quotes.length)
       }
       setSelectedQuote(quotes[quoteIndex])
+      setQuotesLoaded(true);
    };
 
    return (
