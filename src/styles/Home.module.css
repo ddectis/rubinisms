@@ -28,19 +28,33 @@
    padding-block: 30px;
 }
 
-.quoteHeading{
-  display: flex;
-    justify-content: space-between;
+.quoteHeading {
+   display: flex;
+   justify-content: space-between;
 }
 
 .getRandomQuoteButton {
-   position: fixed;
-   bottom: 0%;
    width: 60%;
-   height: 2.5em;
-   font-size: 1.2em;
+   height: 3em;
+   font-size: 1.5em;
    background: rgb(150, 150, 229);
    text-shadow: 0 0 black;
+}
+
+.plusQuote {
+   background: rgb(150, 229, 188);
+}
+
+.negQuote {
+   background: rgb(229, 150, 150);;
+}
+
+.navButtonHolder {
+   display: flex;
+   flex-direction: row;
+   position: fixed;
+   bottom: 0;
+   width: 100%;
 }
 
 .description a {
@@ -144,6 +158,7 @@
 .logo {
    position: relative;
 }
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
    .card:hover {
@@ -215,11 +230,9 @@
       border-radius: 0;
       border: none;
       border-bottom: 1px solid rgba(var(--callout-border-rgb), 0.25);
-      background: linear-gradient(
-         to bottom,
-         rgba(var(--background-start-rgb), 1),
-         rgba(var(--callout-rgb), 0.5)
-      );
+      background: linear-gradient(to bottom,
+            rgba(var(--background-start-rgb), 1),
+            rgba(var(--callout-rgb), 0.5));
       background-clip: padding-box;
       backdrop-filter: blur(24px);
    }
@@ -230,11 +243,9 @@
       inset: auto 0 0;
       padding: 2rem;
       height: 200px;
-      background: linear-gradient(
-         to bottom,
-         transparent 0%,
-         rgb(var(--background-end-rgb)) 40%
-      );
+      background: linear-gradient(to bottom,
+            transparent 0%,
+            rgb(var(--background-end-rgb)) 40%);
       z-index: 1;
    }
 }
@@ -260,6 +271,7 @@
    from {
       transform: rotate(360deg);
    }
+
    to {
       transform: rotate(0deg);
    }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "@/styles/Home.module.css";
-import Intro from "@/components/Intro"
+import Intro from "@/components/Intro";
 
 interface Quote {
    text: string;
@@ -44,6 +44,24 @@ const JsonParserComponent = () => {
       }
    };
 
+   const getNextQuote = () => {
+      console.log("getting next quote");
+      setQuoteIndex(quoteIndex + 1)
+      if (quoteIndex > quotes.length){
+         setQuoteIndex(0)
+      }
+      setSelectedQuote(quotes[quoteIndex])
+   };
+
+   const getPreviousQuote = () => {
+      console.log("getting previous quote")
+      setQuoteIndex(quoteIndex - 1)
+      if (quoteIndex < 0){
+         setQuoteIndex(quotes.length)
+      }
+      setSelectedQuote(quotes[quoteIndex])
+   };
+
    return (
       <div className={styles.main}>
          {quotesLoaded ? (
@@ -63,12 +81,29 @@ const JsonParserComponent = () => {
             </>
          ) : (
             <>
-               <Intro/>
+               <Intro />
             </>
          )}
-         <button className={styles.getRandomQuoteButton} onClick={getRandomQuote}>
-            Grab Random Quote
-         </button>
+         <div className={styles.navButtonHolder}>
+            <button
+               className={`${styles.getRandomQuoteButton} ${styles.plusQuote}`}
+               onClick={getPreviousQuote}
+            >
+               -
+            </button>
+            <button
+               className={styles.getRandomQuoteButton}
+               onClick={getRandomQuote}
+            >
+               Random
+            </button>
+            <button
+               className={`${styles.getRandomQuoteButton} ${styles.negQuote}`}
+               onClick={getNextQuote}
+            >
+               +
+            </button>
+         </div>
       </div>
    );
 };
