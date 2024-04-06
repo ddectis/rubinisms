@@ -88,7 +88,7 @@ const JsonParserComponent = () => {
          )}
          <div className={styles.navButtonHolder}>
             <button
-               className={`${styles.getRandomQuoteButton} ${styles.plusQuote}`}
+               className={`${styles.getRandomQuoteButton} ${styles.negQuote}`}
                onClick={getPreviousQuote}
             >
                -
@@ -100,7 +100,7 @@ const JsonParserComponent = () => {
                Random
             </button>
             <button
-               className={`${styles.getRandomQuoteButton} ${styles.negQuote}`}
+               className={`${styles.getRandomQuoteButton} ${styles.plusQuote}`}
                onClick={getNextQuote}
             >
                +
