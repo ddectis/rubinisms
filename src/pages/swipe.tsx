@@ -1,9 +1,8 @@
 import styles from "@/styles/Swipe.module.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEvent } from "react";
 
 export default function Swipe() {
    const [xPosition, setXPosition] = useState(0);
-   
 
    useEffect(() => {}, [xPosition]);
 
@@ -14,17 +13,19 @@ export default function Swipe() {
    const [position, setPosition] = useState({ x: 0, y: 0 });
    const [mouseDown, setMouseDown] = useState(false);
 
-   const handleMouseMove = (event) => {
+   const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
       if (mouseDown) {
          console.log("Mousedown: " + mouseDown);
          setPosition({ x: event.clientX, y: event.clientY });
       }
    };
 
-   const handleMouseDown = (event) => {
+   const handleMouseDown: React.MouseEventHandler<HTMLDivElement> = (
+      event: MouseEvent<HTMLDivElement>
+   ) => {
       console.log("Mouse Down");
       setMouseDown(true);
-      setPosition({ x: event.clientX, y: event.clientY });      
+      setPosition({ x: event.clientX, y: event.clientY });
    };
 
    const handleMouseUp = () => {
@@ -40,7 +41,7 @@ export default function Swipe() {
                height: "100vh",
                width: "100vw",
             }}
-            onMouseDown={() => handleMouseDown}
+            onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
          >
