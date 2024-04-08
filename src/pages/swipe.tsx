@@ -17,7 +17,7 @@ export default function Swipe() {
       const midPoint = screenWidth / 2;
       setInitialX(midPoint);
       setPosition(midPoint);
-      setSwipeThreshold(screenWidth * 0.3);
+      setSwipeThreshold(screenWidth * 0.24);
       console.log("Doing initial setup. Width:" + screenWidth);
    }, [initialX]);
 
@@ -65,7 +65,7 @@ export default function Swipe() {
 
    const measureSwipeDistance = () => {
       const swipeDistance = initialX - position;
-      console.log("Swipe Distance: " + swipeDistance);
+      //console.log("Swipe Distance: " + swipeDistance);
       setSwipeDistance(swipeDistance);
    };
 
