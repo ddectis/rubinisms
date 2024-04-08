@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "@/styles/Home.module.css";
 import Intro from "@/components/Intro";
+import NavButtons from "@/components/NavButtons";
 
 interface Quote {
    text: string;
@@ -46,21 +47,21 @@ const JsonParserComponent = () => {
 
    const getNextQuote = () => {
       console.log("getting next quote");
-      setQuoteIndex(quoteIndex + 1)
-      if (quoteIndex > quotes.length){
-         setQuoteIndex(0)
+      setQuoteIndex(quoteIndex + 1);
+      if (quoteIndex > quotes.length) {
+         setQuoteIndex(0);
       }
-      setSelectedQuote(quotes[quoteIndex])
+      setSelectedQuote(quotes[quoteIndex]);
       setQuotesLoaded(true);
    };
 
    const getPreviousQuote = () => {
-      console.log("getting previous quote")
-      setQuoteIndex(quoteIndex - 1)
-      if (quoteIndex < 0){
-         setQuoteIndex(quotes.length)
+      console.log("getting previous quote");
+      setQuoteIndex(quoteIndex - 1);
+      if (quoteIndex < 0) {
+         setQuoteIndex(quotes.length);
       }
-      setSelectedQuote(quotes[quoteIndex])
+      setSelectedQuote(quotes[quoteIndex]);
       setQuotesLoaded(true);
    };
 
@@ -86,26 +87,11 @@ const JsonParserComponent = () => {
                <Intro />
             </>
          )}
-         <div className={styles.navButtonHolder}>
-            <button
-               className={`${styles.getRandomQuoteButton} ${styles.negQuote}`}
-               onClick={getPreviousQuote}
-            >
-               -
-            </button>
-            <button
-               className={styles.getRandomQuoteButton}
-               onClick={getRandomQuote}
-            >
-               Random
-            </button>
-            <button
-               className={`${styles.getRandomQuoteButton} ${styles.plusQuote}`}
-               onClick={getNextQuote}
-            >
-               +
-            </button>
-         </div>
+         <NavButtons
+            getNextQuote={getNextQuote}
+            getRandomQuote={getRandomQuote}
+            getPreviousQuote={getPreviousQuote}
+         />
       </div>
    );
 };

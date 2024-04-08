@@ -1,0 +1,13 @@
+.content{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card{
+    height: 200px;
+    outline: 1px solid white;
+    padding: 50px;
+    border-radius: 50px;
+}
