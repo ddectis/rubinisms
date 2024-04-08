@@ -33,6 +33,23 @@ export default function Swipe() {
       setMouseDown(false);
    };
 
+   const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (
+      event
+   ) => {
+      console.log("Touch Start");
+      const touch = event.touches[0];
+      setPosition({ x: touch.clientX, y: touch.clientY });
+   };
+
+   const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (event) => {
+    const touch = event.touches[0];
+    setPosition({x: touch.clientX, y: touch.clientY})
+   };
+
+   const handleTouchStop = () =>{
+
+   }
+
    return (
       <>
          <div
@@ -44,6 +61,9 @@ export default function Swipe() {
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onMouseMove={handleMouseMove}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchCancel={handleTouchStop}
          >
             <div
                style={{
