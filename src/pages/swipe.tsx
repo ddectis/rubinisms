@@ -98,7 +98,7 @@ export default function Swipe() {
             onMouseMove={handleMouseMove}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
-            onTouchCancel={handleTouchStop}
+            onTouchEnd={handleTouchStop}
          >
             <div
                style={{
