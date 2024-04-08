@@ -3,6 +3,7 @@ import React, { useState, useEffect, MouseEvent } from "react";
 
 export default function Swipe() {
    const [position, setPosition] = useState(0);
+   const [screenPosition, setScreenPosition] = useState(0)
    const [mouseDown, setMouseDown] = useState(false);
    const [initialX, setInitialX] = useState(0);
    const [swipeDistance, setSwipeDistance] = useState(0);
@@ -16,8 +17,8 @@ export default function Swipe() {
       const screenWidth = window.innerWidth;
       const midPoint = screenWidth / 2;
       setInitialX(midPoint);
-      setPosition(midPoint);
-      setSwipeThreshold(screenWidth * 0.24);
+      //setPosition(midPoint);
+      setSwipeThreshold(screenWidth * 0.35);
       console.log("Doing initial setup. Width:" + screenWidth);
    }, [initialX]);
 
@@ -65,6 +66,9 @@ export default function Swipe() {
 
    const measureSwipeDistance = () => {
       const swipeDistance = initialX - position;
+      const screenPosition = ((window.innerWidth / 2) - swipeDistance) / window.innerWidth * 100
+      setScreenPosition(screenPosition);
+      console.log("Screen Position: " + screenPosition + " Swipe Distance: " + swipeDistance)
       //console.log("Swipe Distance: " + swipeDistance);
       setSwipeDistance(swipeDistance);
    };
@@ -86,8 +90,14 @@ export default function Swipe() {
          }
       } else {
          setPosition(initialX);
+         setScreenPosition(0)
       }
    };
+
+   const calculateScreenPosition = () =>{
+    const screenPosition = (position - initialX);
+    
+   }
 
    return (
       <>
@@ -101,9 +111,10 @@ export default function Swipe() {
             onTouchEnd={handleTouchStop}
          >
             <div
+               className={styles.card}
                style={{
                   position: "absolute",
-                  left: position,
+                  transform: `translateX(${screenPosition}%)`,
                   top: 50,
                }}
                id="slider"
