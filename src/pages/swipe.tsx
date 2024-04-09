@@ -2,16 +2,15 @@ import styles from "@/styles/Swipe.module.css";
 import React, { useState, useEffect, MouseEvent } from "react";
 
 export default function Swipe() {
-   const [position, setPosition] = useState(0);
+   const [position, setPosition] = useState(0); 
    const [screenPosition, setScreenPosition] = useState(0)
    const [mouseDown, setMouseDown] = useState(false);
    const [initialX, setInitialX] = useState(0);
    const [swipeDistance, setSwipeDistance] = useState(0);
    const [swipeThreshold, setSwipeThreshold] = useState(0);
-   const [initalMousePosition, setInitialMousePosition] = useState({
-      x: 0,
-      y: 0,
-   });
+   const [initalMousePosition, setInitialMousePosition] = useState(0);
+   //we're actually only capturing X position here since we're sliding cards left and right
+   const [initialTouchPosition, setInitialTouchPosition] = useState(0)
 
    useEffect(() => {
       const screenWidth = window.innerWidth;
@@ -25,7 +24,7 @@ export default function Swipe() {
    const handleMouseMove = (event: MouseEvent<HTMLDivElement>) => {
       if (mouseDown) {
          console.log("Mousedown: " + mouseDown);
-         setPosition(event.clientX);
+         setPosition(event.clientX - initalMousePosition);
          measureSwipeDistance();
       }
    };
@@ -35,7 +34,7 @@ export default function Swipe() {
    ) => {
       console.log("Mouse Down");
       setMouseDown(true);
-      setInitialMousePosition({ x: event.clientX, y: event.clientY });
+      setInitialMousePosition(event.clientX);
       //setPosition({ x: event.clientX, y: position.y });
    };
 
@@ -50,12 +49,15 @@ export default function Swipe() {
    ) => {
       console.log("Touch Start");
       const touch = event.touches[0];
-      setPosition(touch.clientX);
+      //setPosition(touch.clientX);
+      setInitialTouchPosition(touch.clientX)
+      setInitialX(touch.clientX)
    };
 
    const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (event) => {
       const touch = event.touches[0];
-      setPosition(touch.clientX);
+      setPosition(touch.clientX - initialTouchPosition);
+      console.log("Position: " + position)
       measureSwipeDistance();
    };
 
@@ -65,10 +67,11 @@ export default function Swipe() {
    };
 
    const measureSwipeDistance = () => {
-      const swipeDistance = initialX - position;
-      const screenPosition = ((window.innerWidth / 2) - swipeDistance) / window.innerWidth * 100
+      const swipeDistance = position;
+      const screenWidth = window.innerWidth;
+      const screenPosition = position / screenWidth * 100;
       setScreenPosition(screenPosition);
-      console.log("Screen Position: " + screenPosition + " Swipe Distance: " + swipeDistance)
+      console.log("Screen Position: " + screenPosition + " Swipe Distance: " + swipeDistance + " Screen Width: " + screenWidth)
       //console.log("Swipe Distance: " + swipeDistance);
       setSwipeDistance(swipeDistance);
    };
@@ -83,7 +86,7 @@ export default function Swipe() {
       if (Math.abs(swipeDistance) > swipeThreshold) {
          console.log("swipe threshold exceeded");
          const slider = document.getElementById("slider");
-         if (swipeDistance < 0) {
+         if (swipeDistance > 0) {
             slider?.classList.add(styles.dismissRight);
          } else {
             slider?.classList.add(styles.dismissLeft);
