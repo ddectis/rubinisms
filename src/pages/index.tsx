@@ -74,6 +74,7 @@ const JsonParserComponent = () => {
                quoteIndex={quoteIndex}
                selectedQuote={selectedQuote}
                quotes={quotes}
+               getRandomQuote={getRandomQuote}
                />
 
             </>
@@ -87,6 +88,7 @@ const JsonParserComponent = () => {
             getRandomQuote={getRandomQuote}
             getPreviousQuote={getPreviousQuote}
          />
+         
       </div>
    );
 };

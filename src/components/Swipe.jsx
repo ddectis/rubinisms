@@ -2,7 +2,7 @@ import styles from "@/styles/Swipe.module.css";
 import homeStyles from "@/styles/Home.module.css";
 import React, { useState, useEffect, MouseEvent } from "react";
 
-export default function Swipe(quoteIndex, selectedQuote, quotes) {
+export default function Swipe({quoteIndex, selectedQuote, quotes, getRandomQuote}) {
    //position is actually used to measure the swipe distance
    const [position, setPosition] = useState(0);
    //screen position is a percent that starts at 0 and feeds the transformX css property
@@ -95,10 +95,12 @@ export default function Swipe(quoteIndex, selectedQuote, quotes) {
          console.log("swipe threshold exceeded");
          const slider = document.getElementById("slider");
          if (swipeDistance > 0) {
-            slider?.classList.add(styles.dismissRight);
+            //slider?.classList.add(styles.dismissRight);
          } else {
-            slider?.classList.add(styles.dismissLeft);
+            //slider?.classList.add(styles.dismissLeft);
          }
+         getRandomQuote();
+         setScreenPosition(0);
       } else {
          setPosition(initialX);
          setScreenPosition(0);
@@ -121,7 +123,7 @@ export default function Swipe(quoteIndex, selectedQuote, quotes) {
             onTouchEnd={handleTouchStop}
          >
             <div
-               className={styles.card}
+               
                style={{
                   position: "absolute",
                   transform: `translateX(${screenPosition}%)`,
@@ -129,12 +131,12 @@ export default function Swipe(quoteIndex, selectedQuote, quotes) {
                }}
                id="slider"
             >
-               <div className={styles.quote}>
-                  <div className={styles.quoteText}>
-                     <div className={styles.quoteHeading}>
+               <div className={homeStyles.quote}>
+                  <div className={homeStyles.quoteText}>
+                     <div className={homeStyles.quoteHeading}>
                         <h2>Rubinisms</h2>
-                        <h3 className={styles.quoteIndex}>
-                           {/* {quoteIndex} of {quotes.length} */}
+                        <h3 className={homeStyles.quoteIndex}>
+                           {quoteIndex} of {quotes.length}
                         </h3>
                      </div>
 
