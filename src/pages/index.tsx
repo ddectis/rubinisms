@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "@/styles/Home.module.css";
 import Intro from "@/components/Intro";
 import NavButtons from "@/components/NavButtons";
+import Swipe from "@/components/Swipe";
 
 interface Quote {
    text: string;
@@ -69,18 +70,12 @@ const JsonParserComponent = () => {
       <div className={styles.main}>
          {quotesLoaded ? (
             <>
-               <div className={styles.quote}>
-                  <div className={styles.quoteText}>
-                     <div className={styles.quoteHeading}>
-                        <h2>Rubinisms</h2>
-                        <h3 className={styles.quoteIndex}>
-                           {quoteIndex} of {quotes.length}
-                        </h3>
-                     </div>
+               <Swipe
+               quoteIndex={quoteIndex}
+               selectedQuote={selectedQuote}
+               quotes={quotes}
+               />
 
-                     {selectedQuote && <p>{selectedQuote.text}</p>}
-                  </div>
-               </div>
             </>
          ) : (
             <>
