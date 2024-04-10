@@ -25,3 +25,17 @@
     transform: translateX(1000%) !important;
     transition: transform 0.5s ease-out;
 }
+
+.opacityTransition{
+    opacity: 0;
+
+}
+
+.opacityHardCut{
+    transition: unset;
+}
+
+.fadeIn{
+    opacity: 1;
+    transition: .1s;
+}

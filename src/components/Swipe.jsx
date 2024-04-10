@@ -111,17 +111,34 @@ export default function Swipe({
       if (Math.abs(swipeDistance) > swipeThreshold) {
          console.log("swipe threshold exceeded");
          const slider = document.getElementById("slider");
+         slider?.classList.add(styles.opacityHardCut)
          if (swipeDistance > 0) {
-            //slider?.classList.add(styles.dismissRight);
+            slider?.classList.add(styles.dismissRight);
          } else {
-            //slider?.classList.add(styles.dismissLeft);
+            slider?.classList.add(styles.dismissLeft);
          }
          getRandomQuote();
-         setScreenPosition(0);
+         
+         fadeInNewQuote();
       } else {
          setPosition(0);
          setScreenPosition(0);
       }
+   };
+
+   const fadeInNewQuote = () => {
+      const slider = document.getElementById("slider");
+      slider?.classList.remove(styles.fadeIn)
+      
+      if (slider?.classList.contains(styles.dismissLeft)){
+         slider?.classList.remove(styles.dismissLeft)
+      }
+      if (slider?.classList.contains(styles.dismissRight)){
+         slider?.classList.remove(styles.dismissRight)
+      }
+      setScreenPosition(0);
+      slider?.classList.add(styles.fadeIn)
+      
    };
 
    const calculateScreenPosition = () => {
@@ -140,6 +157,7 @@ export default function Swipe({
             onTouchEnd={handleTouchStop}
          >
             <div
+               className={`${styles.opacityTransition} ${styles.fadeIn}`}
                style={{
                   position: "absolute",
                   transform: `translateX(${screenPosition}%)`,
