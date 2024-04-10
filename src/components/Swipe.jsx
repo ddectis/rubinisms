@@ -2,7 +2,12 @@ import styles from "@/styles/Swipe.module.css";
 import homeStyles from "@/styles/Home.module.css";
 import React, { useState, useEffect, MouseEvent } from "react";
 
-export default function Swipe({quoteIndex, selectedQuote, quotes, getRandomQuote}) {
+export default function Swipe({
+   quoteIndex,
+   selectedQuote,
+   quotes,
+   getRandomQuote,
+}) {
    //position is actually used to measure the swipe distance
    const [position, setPosition] = useState(0);
    //screen position is a percent that starts at 0 and feeds the transformX css property
@@ -22,10 +27,11 @@ export default function Swipe({quoteIndex, selectedQuote, quotes, getRandomQuote
       //setPosition(midPoint);
       setSwipeThreshold(screenWidth * 0.35);
       console.log("Doing initial setup. Width:" + screenWidth);
-   }, [initialX]);
+   }, []);
 
    const handleMouseMove = (event) => {
       if (mouseDown) {
+         event.preventDefault();
          console.log("Mousedown: " + mouseDown);
          setPosition(event.clientX - initalMousePosition);
          measureSwipeDistance();
@@ -34,6 +40,7 @@ export default function Swipe({quoteIndex, selectedQuote, quotes, getRandomQuote
 
    const handleMouseDown = (event) => {
       console.log("Mouse Down");
+      event.preventDefault();
       setMouseDown(true);
       setInitialMousePosition(event.clientX);
       //setPosition({ x: event.clientX, y: position.y });
@@ -45,21 +52,31 @@ export default function Swipe({quoteIndex, selectedQuote, quotes, getRandomQuote
       checkForDismiss();
    };
 
-   const handleTouchStart= (
-      event
-   ) => {
-      console.log("Touch Start");
+   const handleTouchStart = (event) => {
       const touch = event.touches[0];
+      console.log("Touch Start. Position: " + touch.clientX);
       //setPosition(touch.clientX);
-      setInitialTouchPosition(touch.clientX);
-      setInitialX(touch.clientX);
+      if (touch) {
+         setInitialTouchPosition(touch.clientX);
+         setInitialX(touch.clientX);
+      }
    };
 
-   const handleTouchMove= (event) => {
+   const handleTouchMove = (event) => {
       const touch = event.touches[0];
-      setPosition(touch.clientX - initialTouchPosition);
-      console.log("Position: " + position);
-      measureSwipeDistance();
+      if (touch) {
+         console.log("Touch Move. Position: " + touch.clientX);
+         setPosition(touch.clientX - initialTouchPosition);
+         console.log(
+            "Position: " +
+               position +
+               " clientX: " +
+               touch.clientX +
+               " initialTouchPosition: " +
+               initialTouchPosition
+         );
+         measureSwipeDistance();
+      }
    };
 
    const handleTouchStop = () => {
@@ -102,7 +119,7 @@ export default function Swipe({quoteIndex, selectedQuote, quotes, getRandomQuote
          getRandomQuote();
          setScreenPosition(0);
       } else {
-         setPosition(initialX);
+         setPosition(0);
          setScreenPosition(0);
       }
    };
@@ -123,7 +140,6 @@ export default function Swipe({quoteIndex, selectedQuote, quotes, getRandomQuote
             onTouchEnd={handleTouchStop}
          >
             <div
-               
                style={{
                   position: "absolute",
                   transform: `translateX(${screenPosition}%)`,
