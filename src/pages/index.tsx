@@ -3,6 +3,7 @@ import styles from "@/styles/Home.module.css";
 import Intro from "@/components/Intro";
 import NavButtons from "@/components/NavButtons";
 import Swipe from "@/components/Swipe";
+import CopyToClipboard from "@/components/CopyToClipboard"
 
 interface Quote {
    text: string;
@@ -43,7 +44,7 @@ const JsonParserComponent = () => {
                         {quoteIndex} of {quotes.length}
                      </h3>
                   </div>
-                  {selectedQuote && <p>{selectedQuote.text}</p>}
+                  {selectedQuote && <p id="quote-text">{selectedQuote.text}</p>}
                </div>
             </div>
          </>
@@ -90,6 +91,10 @@ const JsonParserComponent = () => {
       setQuotesLoaded(true);
    };
 
+   const copyCurrentQuoteToClipboard = () =>{
+      console.log("Copying to clipboard");
+   }
+
    return (
       <div className={styles.main}>
          {quotesLoaded ? (
@@ -103,6 +108,7 @@ const JsonParserComponent = () => {
                <Intro />
             </>
          )}
+         <CopyToClipboard onClick={copyCurrentQuoteToClipboard}/>
          <NavButtons
             getNextQuote={getNextQuote}
             getRandomQuote={getRandomQuote}

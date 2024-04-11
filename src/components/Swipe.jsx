@@ -129,7 +129,9 @@ export default function Swipe({
             //slider?.classList.add(styles.dismissLeft);
          }
          actionOnDismiss();
+         setPosition(0)
          setScreenPosition(0)
+         setSwipeDistance(0)
       } else {
          setPosition(0);
          setScreenPosition(0);
