@@ -1,9 +1,10 @@
-import { useState, useEffect, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode, Suspense, lazy } from "react";
 import styles from "@/styles/Home.module.css";
 import Intro from "@/components/Intro";
 import NavButtons from "@/components/NavButtons";
 import Swipe from "@/components/Swipe";
 import CopyToClipboard from "@/components/CopyToClipboard";
+const LazySwipe = React.lazy(() => import("@/components/Swipe"));
 
 interface Quote {
    text: string;
@@ -57,9 +58,7 @@ const JsonParserComponent = () => {
       const templateOfQuotes = quotes.map((quote, index) => (
          <>
             {/* {console.log("mapping. quotes: " + quotes.length + " text: " + quote.text)} */}
-            <div className={styles.quote} style={{
-               zIndex: index,
-               position: "absolute"}}>
+            <div className={styles.quote}>
                <div className={styles.quoteText}>
                   <div className={styles.quoteHeading}>
                      <h2>Rubinisms</h2>
@@ -127,14 +126,18 @@ const JsonParserComponent = () => {
          {quotesLoaded ? (
             <>
                {quoteTemplates.map((template, index) => {
-                  index++
+                  index++;
                   return (
-                     <Swipe
-                        key={index}
-                        content={template}
-                        actionOnDismiss={getRandomQuote}
-                        cardIndex={index}
-                     />
+                     <div>
+                        <Suspense fallback={<div>Loading...</div>}>
+                        <LazySwipe
+                           key={index}
+                           content={template}
+                           actionOnDismiss={getRandomQuote}
+                           cardIndex={index}
+                        />
+                        </Suspense>
+                     </div>
                   );
                })}
             </>
