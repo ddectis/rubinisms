@@ -16,8 +16,9 @@ const JsonParserComponent = () => {
    const [quoteIndex, setQuoteIndex] = useState(0);
    const [quotesLoaded, setQuotesLoaded] = useState(false);
    const [lastIndexToLoad, setLastIndexToLoad] = useState(5);
-
-
+   const [firstIndexToLoad, setFirstIndexToLoad] = useState(0);
+   let templateOfQuotes: JSX.Element[] = [];
+   let additionalQuote: JSX.Element = <></>
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -37,11 +38,11 @@ const JsonParserComponent = () => {
       loadJsonFile();
    }, []); // Empty dependency array ensures it runs only once on mount
 
-
+   //use this only on page load to load the first set of cards
    useEffect(() => {
+      console.log("First Five Quotes");
       const firstFiveQuotes = quotes.slice(0, lastIndexToLoad);
-      const templateOfQuotes = [];
-      for (let i = 0; i < firstFiveQuotes.length; i++) {
+      for (let i = 0; i >= 0; i--) {
          const quote = firstFiveQuotes[i];
          templateOfQuotes.push(
             <div className={styles.quote} key={i}>
@@ -57,23 +58,31 @@ const JsonParserComponent = () => {
             </div>
          );
       }
-      setQuoteTemplates(templateOfQuotes)
-   }, [quotes, lastIndexToLoad]);
+
+      setQuoteTemplates(templateOfQuotes);
+   }, [quotes]);
 
    useEffect(() => {
       console.log("Length: " + quoteTemplates.length);
    }, [quoteTemplates]);
 
-   useEffect(() => {
-      setSelectedQuote(quotes[quoteIndex]);
-   }, [quoteIndex]);
+   // useEffect(() => {
+   //    setSelectedQuote(quotes[quoteIndex]);
+   // }, [quoteIndex]);
+
+   useEffect(() =>{
+
+   }, [lastIndexToLoad])
 
    const getRandomQuote = () => {
       console.log("Get Random Quote");
       if (quotes.length > 0) {
          // Check if quotes are loaded before accessing them
-         setQuoteIndex(Math.floor(Math.random() * quotes.length));
-         setLastIndexToLoad(lastIndexToLoad + 1)
+         setQuoteIndex(Math.floor(Math.random() * quotes.length)); //not functional
+
+         setLastIndexToLoad(lastIndexToLoad + 1);
+         setFirstIndexToLoad(firstIndexToLoad + 1);
+         appendNewQuoteToArray();
          setQuotesLoaded(true);
          window.scrollTo({
             top: 0,
@@ -108,12 +117,36 @@ const JsonParserComponent = () => {
       console.log("Copying to clipboard");
    };
 
+   const appendNewQuoteToArray = () => {
+      console.log(
+         "appending new quote to array. Last Index: " + lastIndexToLoad
+      );
+      const updatedTemplates = quoteTemplates.slice(0, -1);
+      setQuoteTemplates(updatedTemplates);
+      const newQuote = (
+         <div className={styles.quote} key={lastIndexToLoad}>
+            <div className={styles.quoteText}>
+               <div className={styles.quoteHeading}>
+                  <h2>Rubinismssss</h2>
+                  <h3 className={styles.quoteIndex}>
+                     {lastIndexToLoad} of {quotes.length}
+                  </h3>
+               </div>
+               <p id="quote-text">{quotes[lastIndexToLoad].text}</p>
+            </div>
+         </div>
+      );
+      console.log(newQuote)
+      setQuoteTemplates([...quoteTemplates, newQuote]);
+      
+   };
+
    return (
       <div className={styles.main}>
          {quotesLoaded ? (
             <>
                {quoteTemplates.map((template, index) => {
-                  index++;
+                  //console.log(template)
                   return (
                      <Swipe
                         key={index}
