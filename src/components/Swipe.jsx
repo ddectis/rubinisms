@@ -173,7 +173,7 @@ export default function Swipe({
                            {quoteIndex} of {quotes.length}
                         </h3>
                      </div>
-
+<div>yes</div>
                      {selectedQuote && <p>{selectedQuote.text}</p>}
                   </div>
                </div>
