@@ -3,7 +3,8 @@ import homeStyles from "@/styles/Home.module.css";
 import React, { useState, useEffect, MouseEvent } from "react";
 
 export default function Swipe({
-   content
+   content,
+   actionOnDismiss
 }) {
    //position is actually used to measure the swipe distance
    const [position, setPosition] = useState(0);
@@ -16,6 +17,7 @@ export default function Swipe({
    const [initalMousePosition, setInitialMousePosition] = useState(0);
    //we're actually only capturing X position here since we're sliding cards left and right
    const [initialTouchPosition, setInitialTouchPosition] = useState(0);
+   const slider = document.getElementById("slider");
 
    useEffect(() => {
       const screenWidth = window.innerWidth;
@@ -25,6 +27,18 @@ export default function Swipe({
       setSwipeThreshold(screenWidth * 0.35);
       console.log("Doing initial setup. Width:" + screenWidth);
    }, []);
+
+   useEffect(() =>{
+      console.log("class list changed")
+      // if(slider?.classList.contains("dismissRight")){
+      //    slider?.classList.add("dismissLeft")
+      //    slider?.classList.remove("dismissRight");
+      // }
+      // if(slider?.classList.contains("dismissLeft")){
+      //    slider?.classList.add("dismissRight")
+      //    slider?.classList.remove("dismissLeft");
+      // }
+   }, [slider?.classList.length])
 
    const handleMouseMove = (event) => {
       if (mouseDown) {
@@ -107,16 +121,14 @@ export default function Swipe({
       );
       if (Math.abs(swipeDistance) > swipeThreshold) {
          console.log("swipe threshold exceeded");
-         const slider = document.getElementById("slider");
-         slider?.classList.add(styles.opacityHardCut)
-         if (swipeDistance > 0) {
-            slider?.classList.add(styles.dismissRight);
-         } else {
-            slider?.classList.add(styles.dismissLeft);
-         }
-         //getRandomQuote();
          
-         //fadeInNewQuote();
+         //slider?.classList.add(styles.opacityHardCut)
+         if (swipeDistance > 0) {
+            //slider?.classList.add(styles.dismissRight);
+         } else {
+            //slider?.classList.add(styles.dismissLeft);
+         }
+         actionOnDismiss();
          setScreenPosition(0)
       } else {
          setPosition(0);
@@ -125,7 +137,7 @@ export default function Swipe({
    };
 
    const fadeInNewQuote = () => {
-      const slider = document.getElementById("slider");
+      
       slider?.classList.remove(styles.fadeIn)
       
       if (slider?.classList.contains(styles.dismissLeft)){

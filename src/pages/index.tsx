@@ -94,7 +94,9 @@ const JsonParserComponent = () => {
       <div className={styles.main}>
          {quotesLoaded ? (
             <>
-               <Swipe content={content} />
+               <Swipe 
+               content={content}
+               actionOnDismiss={getRandomQuote} />
             </>
          ) : (
             <>

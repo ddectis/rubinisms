@@ -37,5 +37,6 @@
 
 .fadeIn{
     opacity: 1;
-    transition: .1s;
+    width: 90%;
+    transition: 0.2s;
 }
