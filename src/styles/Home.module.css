@@ -13,6 +13,7 @@
    padding-bottom: 160px;
    display: flex;
    justify-content: center;
+   min-height: 100vh;
 }
 
 .quoteIndex {
@@ -28,6 +29,10 @@
    border: 1px solid white;
    border-radius: 20px;
    padding-block: 30px;
+   background: #191919;
+   box-shadow: -1px 14px 20px 0px rgb(30, 30, 30);
+   width: 95%;
+
 }
 
 .quoteHeading {
