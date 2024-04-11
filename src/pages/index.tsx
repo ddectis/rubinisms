@@ -15,7 +15,9 @@ const JsonParserComponent = () => {
    const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
    const [quoteIndex, setQuoteIndex] = useState(0);
    const [quotesLoaded, setQuotesLoaded] = useState(false);
-   const [content, setContent] = useState(<></>);
+   const [lastIndexToLoad, setLastIndexToLoad] = useState(5);
+
+
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -35,46 +37,9 @@ const JsonParserComponent = () => {
       loadJsonFile();
    }, []); // Empty dependency array ensures it runs only once on mount
 
-   useEffect(() => {
-      setContent(
-         <>
-            <div className={styles.quote}>
-               <div className={styles.quoteText}>
-                  <div className={styles.quoteHeading}>
-                     <h2>Rubinisms</h2>
-                     <h3 className={styles.quoteIndex}>
-                        {quoteIndex} of {quotes.length}
-                     </h3>
-                  </div>
-                  {selectedQuote && <p id="quote-text">{selectedQuote.text}</p>}
-               </div>
-            </div>
-         </>
-      );
-   }, [selectedQuote]);
-
-   // useEffect(() => {
-   //    const templateOfQuotes = quotes.map((quote, index) => (
-   //       <>
-   //          {/* {console.log("mapping. quotes: " + quotes.length + " text: " + quote.text)} */}
-   //          <div className={styles.quote}>
-   //             <div className={styles.quoteText}>
-   //                <div className={styles.quoteHeading}>
-   //                   <h2>Rubinisms</h2>
-   //                   <h3 className={styles.quoteIndex}>
-   //                      {index} of {quotes.length - 1}
-   //                   </h3>
-   //                </div>
-   //                <p id="quote-text">{quote.text}</p>
-   //             </div>
-   //          </div>
-   //       </>
-   //    ));
-   //    setQuoteTemplates(templateOfQuotes);
-   // }, [quotes]);
 
    useEffect(() => {
-      const firstFiveQuotes = quotes.slice(0, 5);
+      const firstFiveQuotes = quotes.slice(0, lastIndexToLoad);
       const templateOfQuotes = [];
       for (let i = 0; i < firstFiveQuotes.length; i++) {
          const quote = firstFiveQuotes[i];
@@ -93,7 +58,7 @@ const JsonParserComponent = () => {
          );
       }
       setQuoteTemplates(templateOfQuotes)
-   }, [quotes]);
+   }, [quotes, lastIndexToLoad]);
 
    useEffect(() => {
       console.log("Length: " + quoteTemplates.length);
@@ -104,10 +69,11 @@ const JsonParserComponent = () => {
    }, [quoteIndex]);
 
    const getRandomQuote = () => {
+      console.log("Get Random Quote");
       if (quotes.length > 0) {
          // Check if quotes are loaded before accessing them
          setQuoteIndex(Math.floor(Math.random() * quotes.length));
-
+         setLastIndexToLoad(lastIndexToLoad + 1)
          setQuotesLoaded(true);
          window.scrollTo({
             top: 0,

@@ -120,7 +120,7 @@ export default function Swipe({ content, actionOnDismiss, cardIndex }) {
 
          //slider?.classList.add(styles.opacityHardCut)
          
-         setTimeout(handleDismiss, 1000) 
+         setTimeout(handleDismiss, 500) 
          if (swipeDistance > 0) {
             //console.log("dismissing right")
             slider?.classList.add(styles.dismissRight);
