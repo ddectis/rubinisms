@@ -18,13 +18,13 @@
 }
 
 .dismissLeft {
-    transform: translateX(-1000%) !important;
-    transition: transform 0.5s ease-out;
+    transform: translateX(-200%) !important;
+    transition: transform 0.5s ease-in-out !important;
 }
 
 .dismissRight {
-    transform: translateX(1000%) !important;
-    transition: transform 0.5s ease-out;
+    transform: translateX(200%) !important;
+    transition: transform 0.5s ease-in-out !important;
 }
 
 .opacityTransition{
