@@ -1,10 +1,10 @@
-import React, { useState, useEffect, ReactNode, Suspense, lazy } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import styles from "@/styles/Home.module.css";
 import Intro from "@/components/Intro";
 import NavButtons from "@/components/NavButtons";
 import Swipe from "@/components/Swipe";
 import CopyToClipboard from "@/components/CopyToClipboard";
-const LazySwipe = React.lazy(() => import("@/components/Swipe"));
+
 
 interface Quote {
    text: string;
@@ -128,15 +128,11 @@ const JsonParserComponent = () => {
                {quoteTemplates.map((template, index) => {
                   index++;
                   return (
-                     <div key={index}>
-                        <Suspense fallback={<div>Loading...</div>}>
-                           <LazySwipe
+                           <Swipe
                               content={template}
                               actionOnDismiss={getRandomQuote}
                               cardIndex={index}
                            />
-                        </Suspense>
-                     </div>
                   );
                })}
             </>
