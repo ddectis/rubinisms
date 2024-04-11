@@ -3,10 +3,7 @@ import homeStyles from "@/styles/Home.module.css";
 import React, { useState, useEffect, MouseEvent } from "react";
 
 export default function Swipe({
-   quoteIndex,
-   selectedQuote,
-   quotes,
-   getRandomQuote,
+   content
 }) {
    //position is actually used to measure the swipe distance
    const [position, setPosition] = useState(0);
@@ -117,9 +114,10 @@ export default function Swipe({
          } else {
             slider?.classList.add(styles.dismissLeft);
          }
-         getRandomQuote();
+         //getRandomQuote();
          
-         fadeInNewQuote();
+         //fadeInNewQuote();
+         setScreenPosition(0)
       } else {
          setPosition(0);
          setScreenPosition(0);
@@ -145,6 +143,35 @@ export default function Swipe({
       const screenPosition = position - initialX;
    };
 
+   return (
+      <>
+      <div
+            className={styles.content}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchStop}
+         >
+            <div
+               className={`${styles.opacityTransition} ${styles.fadeIn}`}
+               style={{
+                  position: "absolute",
+                  transform: `translateX(${screenPosition}%)`,
+                  top: 50,
+               }}
+               id="slider"
+            >
+               {content}
+            </div>
+         </div>
+      </>
+   );
+}
+
+
+const holder = () =>{
    return (
       <>
          <div
@@ -173,12 +200,11 @@ export default function Swipe({
                            {quoteIndex} of {quotes.length}
                         </h3>
                      </div>
-<div>yes</div>
                      {selectedQuote && <p>{selectedQuote.text}</p>}
                   </div>
                </div>
             </div>
          </div>
       </>
-   );
+   )
 }

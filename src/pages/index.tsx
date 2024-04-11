@@ -13,6 +13,7 @@ const JsonParserComponent = () => {
    const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
    const [quoteIndex, setQuoteIndex] = useState(0);
    const [quotesLoaded, setQuotesLoaded] = useState(false);
+   const [content, setContent] = useState(<></>);
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -31,11 +32,34 @@ const JsonParserComponent = () => {
       loadJsonFile();
    }, []); // Empty dependency array ensures it runs only once on mount
 
+   useEffect(() => {
+      setContent(
+         <>
+            <div className={styles.quote}>
+               <div className={styles.quoteText}>
+                  <div className={styles.quoteHeading}>
+                     <h2>Rubinisms</h2>
+                     <h3 className={styles.quoteIndex}>
+                        {quoteIndex} of {quotes.length}
+                     </h3>
+                  </div>
+                  {selectedQuote && <p>{selectedQuote.text}</p>}
+               </div>
+            </div>
+         </>
+      );
+   }, [selectedQuote]);
+
+   useEffect(() =>{
+      setSelectedQuote(quotes[quoteIndex]);
+   }, [quoteIndex])
+
    const getRandomQuote = () => {
       if (quotes.length > 0) {
          // Check if quotes are loaded before accessing them
          setQuoteIndex(Math.floor(Math.random() * quotes.length));
-         setSelectedQuote(quotes[quoteIndex]);
+         
+
          setQuotesLoaded(true);
          window.scrollTo({
             top: 0,
@@ -70,13 +94,7 @@ const JsonParserComponent = () => {
       <div className={styles.main}>
          {quotesLoaded ? (
             <>
-               <Swipe
-               quoteIndex={quoteIndex}
-               selectedQuote={selectedQuote}
-               quotes={quotes}
-               getRandomQuote={getRandomQuote}
-               />
-
+               <Swipe content={content} />
             </>
          ) : (
             <>
@@ -88,7 +106,6 @@ const JsonParserComponent = () => {
             getRandomQuote={getRandomQuote}
             getPreviousQuote={getPreviousQuote}
          />
-         
       </div>
    );
 };
