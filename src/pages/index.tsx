@@ -56,7 +56,7 @@ const JsonParserComponent = () => {
    useEffect(() => {
       const templateOfQuotes = quotes.map((quote, index) => (
          <>
-            {console.log("mapping. quotes: " + quotes.length + " text: " + quote.text)}
+            {/* {console.log("mapping. quotes: " + quotes.length + " text: " + quote.text)} */}
             <div className={styles.quote}>
                <div className={styles.quoteText}>
                   <div className={styles.quoteHeading}>

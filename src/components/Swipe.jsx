@@ -70,16 +70,16 @@ export default function Swipe({
    const handleTouchMove = (event) => {
       const touch = event.touches[0];
       if (touch) {
-         console.log("Touch Move. Position: " + touch.clientX);
+         // console.log("Touch Move. Position: " + touch.clientX);
          setPosition(touch.clientX - initialTouchPosition);
-         console.log(
-            "Position: " +
-               position +
-               " clientX: " +
-               touch.clientX +
-               " initialTouchPosition: " +
-               initialTouchPosition
-         );
+         // console.log(
+         //    "Position: " +
+         //       position +
+         //       " clientX: " +
+         //       touch.clientX +
+         //       " initialTouchPosition: " +
+         //       initialTouchPosition
+         // );
          measureSwipeDistance();
       }
    };
@@ -94,25 +94,25 @@ export default function Swipe({
       const screenWidth = window.innerWidth;
       const screenPosition = (position / screenWidth) * 100;
       setScreenPosition(screenPosition);
-      console.log(
-         "Screen Position: " +
-            screenPosition +
-            " Swipe Distance: " +
-            swipeDistance +
-            " Screen Width: " +
-            screenWidth
-      );
+      // console.log(
+      //    "Screen Position: " +
+      //       screenPosition +
+      //       " Swipe Distance: " +
+      //       swipeDistance +
+      //       " Screen Width: " +
+      //       screenWidth
+      // );
       //console.log("Swipe Distance: " + swipeDistance);
       setSwipeDistance(swipeDistance);
    };
 
    const checkForDismiss = () => {
-      console.log(
-         "Checking for swipe dismiss. Distance: " +
-            swipeDistance +
-            " Thresh: " +
-            swipeThreshold
-      );
+      // console.log(
+      //    "Checking for swipe dismiss. Distance: " +
+      //       swipeDistance +
+      //       " Thresh: " +
+      //       swipeThreshold
+      // );
       if (Math.abs(swipeDistance) > swipeThreshold) {
          console.log("swipe threshold exceeded");
          
@@ -120,7 +120,7 @@ export default function Swipe({
          parentElement = slider.parentNode;
          parentElement.classList.add(styles.hide)
          if (swipeDistance > 0) {
-            console.log("dismissing right")
+            //console.log("dismissing right")
             slider?.classList.add(styles.dismissRight);
          } else {
             slider?.classList.add(styles.dismissLeft);
