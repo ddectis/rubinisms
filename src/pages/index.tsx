@@ -57,7 +57,9 @@ const JsonParserComponent = () => {
       const templateOfQuotes = quotes.map((quote, index) => (
          <>
             {/* {console.log("mapping. quotes: " + quotes.length + " text: " + quote.text)} */}
-            <div className={styles.quote} style={{zIndex: index}}>
+            <div className={styles.quote} style={{
+               zIndex: index,
+               position: "absolute"}}>
                <div className={styles.quoteText}>
                   <div className={styles.quoteHeading}>
                      <h2>Rubinisms</h2>
