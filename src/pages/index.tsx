@@ -5,7 +5,6 @@ import NavButtons from "@/components/NavButtons";
 import Swipe from "@/components/Swipe";
 import CopyToClipboard from "@/components/CopyToClipboard";
 
-
 interface Quote {
    text: string;
 }
@@ -128,11 +127,12 @@ const JsonParserComponent = () => {
                {quoteTemplates.map((template, index) => {
                   index++;
                   return (
-                           <Swipe
-                              content={template}
-                              actionOnDismiss={getRandomQuote}
-                              cardIndex={index}
-                           />
+                     <Swipe
+                        key={index}
+                        content={template}
+                        actionOnDismiss={getRandomQuote}
+                        cardIndex={index}
+                     />
                   );
                })}
             </>
