@@ -2,11 +2,7 @@ import styles from "@/styles/Swipe.module.css";
 import homeStyles from "@/styles/Home.module.css";
 import React, { useState, useEffect, MouseEvent } from "react";
 
-export default function Swipe({
-   content,
-   actionOnDismiss,
-   cardIndex
-}) {
+export default function Swipe({ content, actionOnDismiss, cardIndex }) {
    //position is actually used to measure the swipe distance
    const [position, setPosition] = useState(0);
    //screen position is a percent that starts at 0 and feeds the transformX css property
@@ -29,10 +25,7 @@ export default function Swipe({
       setSwipeThreshold(screenWidth * 0.35);
       console.log("Doing initial setup. Width:" + screenWidth);
       slider = document.getElementById(cardIndex);
-      
-
    }, []);
-
 
    const handleMouseMove = (event) => {
       if (mouseDown) {
@@ -113,12 +106,21 @@ export default function Swipe({
       //       " Thresh: " +
       //       swipeThreshold
       // );
+
       if (Math.abs(swipeDistance) > swipeThreshold) {
          console.log("swipe threshold exceeded");
-         
+
+         //hide the parent of the swipe element after 1 second
+         //this allows the user to swipe the next card underneath
+         const handleDismiss = () => {
+            console.log("adding hide")
+            parentElement = slider.parentNode;
+            parentElement.classList.add(styles.hide);
+         };
+
          //slider?.classList.add(styles.opacityHardCut)
-         parentElement = slider.parentNode;
-         parentElement.classList.add(styles.hide)
+         
+         setTimeout(handleDismiss, 1000) 
          if (swipeDistance > 0) {
             //console.log("dismissing right")
             slider?.classList.add(styles.dismissRight);
@@ -126,9 +128,9 @@ export default function Swipe({
             slider?.classList.add(styles.dismissLeft);
          }
          actionOnDismiss();
-         setPosition(0)
-         setScreenPosition(0)
-         setSwipeDistance(0)
+         setPosition(0);
+         setScreenPosition(0);
+         setSwipeDistance(0);
       } else {
          setPosition(0);
          setScreenPosition(0);
@@ -136,20 +138,18 @@ export default function Swipe({
    };
 
    const fadeInNewQuote = () => {
-      
-      slider?.classList.remove(styles.fadeIn)
+      slider?.classList.remove(styles.fadeIn);
       const grandParent = parentElement.parentNode;
-      if (slider?.classList.contains(styles.dismissLeft)){
-         slider?.classList.remove(styles.dismissLeft)
-         grandParent.removeChild(parentElement)
+      if (slider?.classList.contains(styles.dismissLeft)) {
+         slider?.classList.remove(styles.dismissLeft);
+         grandParent.removeChild(parentElement);
       }
-      if (slider?.classList.contains(styles.dismissRight)){
-         slider?.classList.remove(styles.dismissRight)
-         grandParent.removeChild(parentElement)
+      if (slider?.classList.contains(styles.dismissRight)) {
+         slider?.classList.remove(styles.dismissRight);
+         grandParent.removeChild(parentElement);
       }
       setScreenPosition(0);
-      slider?.classList.add(styles.fadeIn)
-      
+     
    };
 
    const calculateScreenPosition = () => {
@@ -158,7 +158,7 @@ export default function Swipe({
 
    return (
       <>
-      <div
+         <div
             className={styles.content}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
@@ -168,11 +168,12 @@ export default function Swipe({
             onTouchEnd={handleTouchStop}
          >
             <div
-               className={`${styles.opacityTransition} ${styles.fadeIn}`}
+               // className={`${styles.opacityTransition} ${styles.fadeIn}`}
                style={{
                   position: "absolute",
                   transform: `translateX(${screenPosition}%)`,
                   top: 50,
+                  transition: "0.5s ease-in-out"
                }}
                id={cardIndex}
             >
@@ -183,8 +184,7 @@ export default function Swipe({
    );
 }
 
-
-const holder = () =>{
+const holder = () => {
    return (
       <>
          <div
@@ -219,5 +219,5 @@ const holder = () =>{
             </div>
          </div>
       </>
-   )
-}
+   );
+};

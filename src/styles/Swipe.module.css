@@ -7,6 +7,7 @@
     align-items: center;
     justify-content: center;
     overflow-x: hidden;
+    transition: 0.5s ease-in-out;
 }
 
 .card {
@@ -38,7 +39,7 @@
 .fadeIn{
     opacity: 1;
     width: 90%;
-    transition: 0.2s;
+    
 }
 
 .hide{
