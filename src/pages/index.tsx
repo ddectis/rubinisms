@@ -53,24 +53,46 @@ const JsonParserComponent = () => {
       );
    }, [selectedQuote]);
 
+   // useEffect(() => {
+   //    const templateOfQuotes = quotes.map((quote, index) => (
+   //       <>
+   //          {/* {console.log("mapping. quotes: " + quotes.length + " text: " + quote.text)} */}
+   //          <div className={styles.quote}>
+   //             <div className={styles.quoteText}>
+   //                <div className={styles.quoteHeading}>
+   //                   <h2>Rubinisms</h2>
+   //                   <h3 className={styles.quoteIndex}>
+   //                      {index} of {quotes.length - 1}
+   //                   </h3>
+   //                </div>
+   //                <p id="quote-text">{quote.text}</p>
+   //             </div>
+   //          </div>
+   //       </>
+   //    ));
+   //    setQuoteTemplates(templateOfQuotes);
+   // }, [quotes]);
+
    useEffect(() => {
-      const templateOfQuotes = quotes.map((quote, index) => (
-         <>
-            {/* {console.log("mapping. quotes: " + quotes.length + " text: " + quote.text)} */}
-            <div className={styles.quote}>
+      const firstFiveQuotes = quotes.slice(0, 5);
+      const templateOfQuotes = [];
+      for (let i = 0; i < firstFiveQuotes.length; i++) {
+         const quote = firstFiveQuotes[i];
+         templateOfQuotes.push(
+            <div className={styles.quote} key={i}>
                <div className={styles.quoteText}>
                   <div className={styles.quoteHeading}>
                      <h2>Rubinisms</h2>
                      <h3 className={styles.quoteIndex}>
-                        {index} of {quotes.length - 1}
+                        {i + 1} of {quotes.length}
                      </h3>
                   </div>
                   <p id="quote-text">{quote.text}</p>
                </div>
             </div>
-         </>
-      ));
-      setQuoteTemplates(templateOfQuotes);
+         );
+      }
+      setQuoteTemplates(templateOfQuotes)
    }, [quotes]);
 
    useEffect(() => {
