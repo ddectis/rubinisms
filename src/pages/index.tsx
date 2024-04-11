@@ -128,14 +128,13 @@ const JsonParserComponent = () => {
                {quoteTemplates.map((template, index) => {
                   index++;
                   return (
-                     <div>
+                     <div key={index}>
                         <Suspense fallback={<div>Loading...</div>}>
-                        <LazySwipe
-                           key={index}
-                           content={template}
-                           actionOnDismiss={getRandomQuote}
-                           cardIndex={index}
-                        />
+                           <LazySwipe
+                              content={template}
+                              actionOnDismiss={getRandomQuote}
+                              cardIndex={index}
+                           />
                         </Suspense>
                      </div>
                   );
