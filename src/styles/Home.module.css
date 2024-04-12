@@ -18,8 +18,8 @@
 }
 
 .randomButton{
-   z-index: 100;
-   position: absolute
+   z-index: 1000;
+
 }
 
 .quoteIndex {
@@ -35,11 +35,17 @@
    border: 1px solid white;
    border-radius: 20px;
    padding-block: 30px;
-   background: #312f56;
+   background: #3d2f56;
    color: #f1f1f1;
    box-shadow: -1px 14px 20px 0px rgb(30, 30, 30);
    width: 95%;
 
+}
+
+.menu{
+   width: 100%;
+   display: flex;
+   justify-content: space-around;
 }
 
 .quoteHeading {
@@ -77,6 +83,18 @@
    justify-content: center;
    align-items: center;
    gap: 0.5rem;
+}
+
+.mainMenuButtons{
+   background: gray;
+   border: 1px solid black;
+   padding: 20px;
+   background-color: #2b223e;
+   color: white;
+   width: 75%;
+   text-align: center;
+   margin-block: 5px;
+   border-radius: 10px;
 }
 
 .description p {

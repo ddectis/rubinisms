@@ -8,6 +8,7 @@
     justify-content: center;
     overflow-x: hidden;
     transition: 0.1s ease-out;
+    margin-top: 25px;
 }
 
 .card {

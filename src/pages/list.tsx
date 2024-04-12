@@ -7,7 +7,7 @@ interface Quote {
 
 export default function List() {
    const [quotes, setQuotes] = useState<Quote[]>([]);
-   const [inputValue, setInputValue] = useState('')
+   const [textSearchInputValue, setTextSearchInputValue] = useState('')
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -23,23 +23,24 @@ export default function List() {
       loadJsonFile();
    }, []); // Empty dependency array ensures it runs only once on mount
 
-   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>{
-    setInputValue(event.target.value)
+   const handleTextSearch = (event: ChangeEvent<HTMLInputElement>) =>{
+    setTextSearchInputValue(event.target.value)
    }
 
+
    const filteredQuotes = quotes.filter((quote) =>
-    quote.text.toLowerCase().includes(inputValue.toLowerCase())
+    quote.text.toLowerCase().includes(textSearchInputValue.toLowerCase())
    )
 
    return (
       <div className={styles.content}>
-         <h2>The List of Rubinisms</h2>
+         <h2 className={styles.pageTitle}>The List of Rubinisms</h2>
          <input
             className={styles.searchField}
             type="text"
-            value={inputValue}
-            onChange={handleChange}
-            placeholder="Filter..."
+            value={textSearchInputValue}
+            onChange={handleTextSearch}
+            placeholder="Filter / Search"
          />
 
          {filteredQuotes.map((quote, index) => (

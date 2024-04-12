@@ -4,6 +4,7 @@ import Intro from "@/components/Intro";
 import NavButtons from "@/components/NavButtons";
 import Swipe from "@/components/Swipe";
 import CopyToClipboard from "@/components/CopyToClipboard";
+import Link from "next/link";
 
 interface Quote {
    text: string;
@@ -173,20 +174,8 @@ const JsonParserComponent = () => {
       <div className={styles.main}>
          {quotesLoaded ? (
             <>
-               {quoteTemplates.map((template, index) => {
-                  return (
-                     <Swipe
-                        key={index}
-                        content={template}
-                        actionOnDismissRight={getNextQuote}
-                        actionOnDismissLeft={getPreviousQuote}
-                        cardIndex={index}
-                     />
-                  );
-               })}
-               {/* <CopyToClipboard onClick={copyCurrentQuoteToClipboard} /> */}
-               <div>
-                  <br />
+               <div className={styles.menu}>
+                  <CopyToClipboard onClick={copyCurrentQuoteToClipboard} />
                   <button
                      className={styles.randomButton}
                      onClick={startFromRandom}
@@ -194,15 +183,37 @@ const JsonParserComponent = () => {
                      Get Random Quote
                   </button>
                </div>
+               {quoteTemplates.map((template, index) => {
+                     return (
+                        <Swipe
+                           key={index}
+                           content={template}
+                           actionOnDismissRight={getNextQuote}
+                           actionOnDismissLeft={getPreviousQuote}
+                           cardIndex={index}
+                        />
+                     );
+                  })}
             </>
          ) : (
             <>
                <Intro />
-               <button onClick={startFromBeginning}>
+               <button
+                  onClick={startFromBeginning}
+                  className={styles.mainMenuButtons}
+               >
                   Start from the beginning
                </button>
 
-               <button onClick={startFromRandom}>Get Random Quote</button>
+               <button
+                  onClick={startFromRandom}
+                  className={styles.mainMenuButtons}
+               >
+                  Get Random Quote
+               </button>
+               <Link href="/list" className={styles.mainMenuButtons}>
+                  Browse / Search List
+               </Link>
             </>
          )}
 
