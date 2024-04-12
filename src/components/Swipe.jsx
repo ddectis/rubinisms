@@ -22,7 +22,7 @@ export default function Swipe({ content, actionOnDismiss, cardIndex }) {
       const midPoint = screenWidth / 2;
       setInitialX(midPoint);
       //setPosition(midPoint);
-      setSwipeThreshold(screenWidth * 0.30);
+      setSwipeThreshold(screenWidth * 0.20);
       console.log("Doing initial setup. Width:" + screenWidth);
       slider = document.getElementById(cardIndex);
    }, []);
