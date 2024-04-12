@@ -16,6 +16,7 @@ const JsonParserComponent = () => {
    const [quoteIndex, setQuoteIndex] = useState(0);
    const [quotesLoaded, setQuotesLoaded] = useState(false);
    const [lastIndexToLoad, setLastIndexToLoad] = useState(0);
+   const [firstIndexToLoad, setFirstIndexToLoad] = useState(0);
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -35,28 +36,31 @@ const JsonParserComponent = () => {
       loadJsonFile();
    }, []); // Empty dependency array ensures it runs only once on mount
 
-
    useEffect(() => {
-     
-      const removeHidefterLoad = (id: number) =>{
+      const removeHidefterLoad = (id: number) => {
          //console.log("Removing hide")
-         const divToRemove = document.getElementById(`quote-${id}`)
+         const divToRemove = document.getElementById(`quote-${id}`);
          //console.log(divToRemove)
-         divToRemove?.classList.remove(`${styles.hideOnLoad}`)
-      }
+         divToRemove?.classList.remove(`${styles.hideOnLoad}`);
+      };
 
-      const firstFiveQuotes = quotes.slice(0, lastIndexToLoad);
+      const firstFiveQuotes = quotes.slice(firstIndexToLoad, lastIndexToLoad);
       const templateOfQuotes = [];
-      console.log("first five shit,. Length: " + firstFiveQuotes.length)
+      console.log("first five shit,. Length: " + firstFiveQuotes.length);
+      console.log(firstFiveQuotes[0]);
       for (let i = 0; i < firstFiveQuotes.length; i++) {
          const quote = firstFiveQuotes[i];
          templateOfQuotes.push(
-            <div className={`${styles.quote} ${styles.hideOnLoad}`} key={i} id={`quote-${i}`}>
+            <div
+               className={`${styles.quote} ${styles.hideOnLoad}`}
+               key={i}
+               id={`quote-${i}`}
+            >
                <div className={styles.quoteText}>
                   <div className={styles.quoteHeading}>
                      <h2>Rubinisms</h2>
                      <h3 className={styles.quoteIndex}>
-                        {i + 1} of {quotes.length}
+                        {lastIndexToLoad} of {quotes.length}
                      </h3>
                   </div>
                   <p id="quote-text">{quote.text}</p>
@@ -64,12 +68,11 @@ const JsonParserComponent = () => {
             </div>
          );
 
-         setTimeout(() => removeHidefterLoad(i),400)
+         setTimeout(() => removeHidefterLoad(i), 400);
       }
-      
-      
-      setQuoteTemplates(templateOfQuotes)
-      console.log(quoteTemplates)
+
+      setQuoteTemplates(templateOfQuotes);
+      console.log(quoteTemplates);
    }, [quotes, lastIndexToLoad]);
 
    useEffect(() => {
@@ -80,12 +83,12 @@ const JsonParserComponent = () => {
       setSelectedQuote(quotes[quoteIndex]);
    }, [quoteIndex]);
 
-   const getRandomQuote = () => {
-      console.log("Get Random Quote");
+   const getNextQuote = () => {
+      console.log("Geting next Quote");
       if (quotes.length > 0) {
          // Check if quotes are loaded before accessing them
          setQuoteIndex(Math.floor(Math.random() * quotes.length));
-         setLastIndexToLoad(lastIndexToLoad + 1)
+         setLastIndexToLoad(lastIndexToLoad + 1);
          //appendNewQuoteToArray();
          setQuotesLoaded(true);
          window.scrollTo({
@@ -97,25 +100,42 @@ const JsonParserComponent = () => {
       }
    };
 
-   const getNextQuote = () => {
-      console.log("getting next quote");
-      setQuoteIndex(quoteIndex + 1);
-      if (quoteIndex > quotes.length) {
-         setQuoteIndex(0);
-      }
-      setSelectedQuote(quotes[quoteIndex]);
+   const getPreviousQuote = () => {
+      setLastIndexToLoad(lastIndexToLoad - 1);
+   };
+
+   const startFromBeginning = () => {
+      setLastIndexToLoad(lastIndexToLoad + 1);
       setQuotesLoaded(true);
    };
 
-   const getPreviousQuote = () => {
-      console.log("getting previous quote");
-      setQuoteIndex(quoteIndex - 1);
-      if (quoteIndex < 0) {
-         setQuoteIndex(quotes.length);
-      }
-      setSelectedQuote(quotes[quoteIndex]);
+   const startFromRandom = () => {
+      const rnd = Math.floor(Math.random() * quotes.length);
+      console.log("Rnd " + rnd);
+      setFirstIndexToLoad(rnd);
+      setLastIndexToLoad(rnd + 1);
       setQuotesLoaded(true);
    };
+
+   // const getNextQuote = () => {
+   //    console.log("getting next quote");
+   //    setQuoteIndex(quoteIndex + 1);
+   //    if (quoteIndex > quotes.length) {
+   //       setQuoteIndex(0);
+   //    }
+   //    setSelectedQuote(quotes[quoteIndex]);
+   //    setQuotesLoaded(true);
+   // };
+
+   // const getPreviousQuote = () => {
+   //    console.log("getting previous quote");
+   //    setQuoteIndex(quoteIndex - 1);
+   //    if (quoteIndex < 0) {
+   //       setQuoteIndex(quotes.length);
+   //    }
+   //    setSelectedQuote(quotes[quoteIndex]);
+   //    setQuotesLoaded(true);
+   // };
 
    const copyCurrentQuoteToClipboard = () => {
       console.log("Copying to clipboard");
@@ -128,7 +148,12 @@ const JsonParserComponent = () => {
       //const updatedTemplates = quoteTemplates.slice(0, -1);
       //setQuoteTemplates(updatedTemplates);
       const newQuote = (
-         <div className={`${styles.quote} ${styles.hideOnLoad}`} key={lastIndexToLoad}> id={lastIndexToLoad}
+         <div
+            className={`${styles.quote} ${styles.hideOnLoad}`}
+            key={lastIndexToLoad}
+         >
+            {" "}
+            id={lastIndexToLoad}
             <div className={styles.quoteText}>
                <div className={styles.quoteHeading}>
                   <h2>Rubinismssss</h2>
@@ -140,9 +165,8 @@ const JsonParserComponent = () => {
             </div>
          </div>
       );
-      console.log(newQuote)
+      console.log(newQuote);
       setQuoteTemplates([newQuote, ...quoteTemplates]);
-      
    };
 
    return (
@@ -154,23 +178,39 @@ const JsonParserComponent = () => {
                      <Swipe
                         key={index}
                         content={template}
-                        actionOnDismiss={getRandomQuote}
+                        actionOnDismissRight={getNextQuote}
+                        actionOnDismissLeft={getPreviousQuote}
                         cardIndex={index}
                      />
                   );
                })}
+               {/* <CopyToClipboard onClick={copyCurrentQuoteToClipboard} /> */}
+               <div>
+                  <br />
+                  <button
+                     className={styles.randomButton}
+                     onClick={startFromRandom}
+                  >
+                     Get Random Quote
+                  </button>
+               </div>
             </>
          ) : (
             <>
                <Intro />
+               <button onClick={startFromBeginning}>
+                  Start from the beginning
+               </button>
+
+               <button onClick={startFromRandom}>Get Random Quote</button>
             </>
          )}
-         <CopyToClipboard onClick={copyCurrentQuoteToClipboard} />
-         <NavButtons
+
+         {/* <NavButtons
             getNextQuote={getNextQuote}
             getRandomQuote={getRandomQuote}
             getPreviousQuote={getPreviousQuote}
-         />
+         /> */}
       </div>
    );
 };

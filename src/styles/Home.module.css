@@ -13,9 +13,13 @@
    padding-bottom: 160px;
    display: flex;
    justify-content: center;
-   min-height: 100vh;
    opacity: 1;
    transition: opacity 0.2s ease-in-out
+}
+
+.randomButton{
+   z-index: 100;
+   position: absolute
 }
 
 .quoteIndex {
@@ -32,7 +36,7 @@
    border-radius: 20px;
    padding-block: 30px;
    background: #312f56;
-   color: #ffffff;
+   color: #f1f1f1;
    box-shadow: -1px 14px 20px 0px rgb(30, 30, 30);
    width: 95%;
 

@@ -2,7 +2,7 @@ import styles from "@/styles/Swipe.module.css";
 import homeStyles from "@/styles/Home.module.css";
 import React, { useState, useEffect, MouseEvent } from "react";
 
-export default function Swipe({ content, actionOnDismiss, cardIndex }) {
+export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRight, cardIndex }) {
    //position is actually used to measure the swipe distance
    const [position, setPosition] = useState(0);
    //screen position is a percent that starts at 0 and feeds the transformX css property
@@ -124,10 +124,12 @@ export default function Swipe({ content, actionOnDismiss, cardIndex }) {
          if (swipeDistance > 0) {
             //console.log("dismissing right")
             slider?.classList.add(styles.dismissRight);
+            actionOnDismissRight();
          } else {
             slider?.classList.add(styles.dismissLeft);
+            actionOnDismissLeft();
          }
-         actionOnDismiss();
+
          setPosition(0);
          setScreenPosition(0);
          setSwipeDistance(0);
