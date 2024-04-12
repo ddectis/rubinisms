@@ -176,44 +176,53 @@ const JsonParserComponent = () => {
             <>
                <div className={styles.menu}>
                   <CopyToClipboard onClick={copyCurrentQuoteToClipboard} />
-                  <button
+                  {/* <button
                      className={styles.randomButton}
                      onClick={startFromRandom}
                   >
                      Get Random Quote
-                  </button>
+                  </button> */}
+                  <Link href="/list" className={styles.mainMenuButtons}>
+                     Browse / Search List
+                  </Link>
                </div>
                {quoteTemplates.map((template, index) => {
-                     return (
-                        <Swipe
-                           key={index}
-                           content={template}
-                           actionOnDismissRight={getNextQuote}
-                           actionOnDismissLeft={getPreviousQuote}
-                           cardIndex={index}
-                        />
-                     );
-                  })}
+                  return (
+                     <Swipe
+                        key={index}
+                        content={template}
+                        actionOnDismissRight={getNextQuote}
+                        actionOnDismissLeft={getPreviousQuote}
+                        cardIndex={index}
+                     />
+                  );
+               })}
             </>
          ) : (
             <>
                <Intro />
-               <button
-                  onClick={startFromBeginning}
-                  className={styles.mainMenuButtons}
-               >
-                  Start from the beginning
-               </button>
+               <div className={styles.oneAtTime}>
+                  <h3>Swipe through</h3>
+                  <button
+                     onClick={startFromBeginning}
+                     className={styles.mainMenuButtons}
+                  >
+                     Starting from the beginning
+                  </button>
 
-               <button
-                  onClick={startFromRandom}
-                  className={styles.mainMenuButtons}
-               >
-                  Get Random Quote
-               </button>
-               <Link href="/list" className={styles.mainMenuButtons}>
-                  Browse / Search List
-               </Link>
+                  <button
+                     onClick={startFromRandom}
+                     className={styles.mainMenuButtons}
+                  >
+                     Or Get a Random Quote
+                  </button>
+               </div>
+               <div className={styles.oneAtTime}>
+                  <h3>Dive Deep</h3>
+                  <Link href="/list" className={styles.mainMenuButtons}>
+                     Browse / Search List
+                  </Link>
+               </div>
             </>
          )}
 

@@ -1,5 +1,6 @@
 import { useEffect, useState, ChangeEvent } from "react";
 import styles from "@/styles/List.module.css";
+import Link from "next/link";
 
 interface Quote {
    text: string;
@@ -7,7 +8,7 @@ interface Quote {
 
 export default function List() {
    const [quotes, setQuotes] = useState<Quote[]>([]);
-   const [textSearchInputValue, setTextSearchInputValue] = useState('')
+   const [textSearchInputValue, setTextSearchInputValue] = useState("");
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -23,18 +24,21 @@ export default function List() {
       loadJsonFile();
    }, []); // Empty dependency array ensures it runs only once on mount
 
-   const handleTextSearch = (event: ChangeEvent<HTMLInputElement>) =>{
-    setTextSearchInputValue(event.target.value)
-   }
-
+   const handleTextSearch = (event: ChangeEvent<HTMLInputElement>) => {
+      setTextSearchInputValue(event.target.value);
+   };
 
    const filteredQuotes = quotes.filter((quote) =>
-    quote.text.toLowerCase().includes(textSearchInputValue.toLowerCase())
-   )
+      quote.text.toLowerCase().includes(textSearchInputValue.toLowerCase())
+   );
 
    return (
       <div className={styles.content}>
+         <Link href="/" className={styles.mainMenuButtons}>
+            Go Home
+         </Link>
          <h2 className={styles.pageTitle}>The List of Rubinisms</h2>
+
          <input
             className={styles.searchField}
             type="text"
