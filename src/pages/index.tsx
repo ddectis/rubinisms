@@ -140,6 +140,26 @@ const JsonParserComponent = () => {
 
    const copyCurrentQuoteToClipboard = () => {
       console.log("Copying to clipboard");
+      const quoteText = quotes[lastIndexToLoad -1].text
+
+      // Create a textarea element to hold the text temporarily
+      const textarea = document.createElement("textarea");
+      textarea.value = quoteText;
+
+      // Append the textarea to the body
+      document.body.appendChild(textarea);
+
+      // Select the text inside the textarea
+      textarea.select();
+
+      // Copy the selected text to the clipboard
+      document.execCommand("copy");
+
+      // Remove the textarea from the body
+      document.body.removeChild(textarea);
+
+      // Alert or show a notification indicating the text has been copied
+      alert(`Copied "${quoteText}"`);
    };
 
    const appendNewQuoteToArray = () => {
@@ -175,7 +195,7 @@ const JsonParserComponent = () => {
          {quotesLoaded ? (
             <>
                <div className={styles.menu}>
-                  <CopyToClipboard onClick={copyCurrentQuoteToClipboard} />
+                  <CopyToClipboard copyFunction={copyCurrentQuoteToClipboard} />
                   {/* <button
                      className={styles.randomButton}
                      onClick={startFromRandom}

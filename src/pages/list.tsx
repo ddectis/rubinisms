@@ -34,21 +34,23 @@ export default function List() {
 
    return (
       <div className={styles.content}>
-         <Link href="/" className={styles.mainMenuButtons}>
-            Go Home
-         </Link>
-         <h2 className={styles.pageTitle}>The List of Rubinisms</h2>
+         <div className={styles.stickyMenu}>
+            <Link href="/" className={styles.mainMenuButtons}>
+               Go Home
+            </Link>
+            <h2 className={styles.pageTitle}>The List of Rubinisms</h2>
 
-         <input
-            className={styles.searchField}
-            type="text"
-            value={textSearchInputValue}
-            onChange={handleTextSearch}
-            placeholder="Filter / Search"
-         />
+            <input
+               className={styles.searchField}
+               type="text"
+               value={textSearchInputValue}
+               onChange={handleTextSearch}
+               placeholder="Filter / Search"
+            />
+         </div>
 
          {filteredQuotes.map((quote, index) => (
-            <div className={styles.quoteCard} key={index}>
+            <div className={styles.quoteCard} key={index} id={index.toString()}>
                <h3 className={styles.quoteNumber}>#{index}</h3>
                <p>{quote.text}</p>
             </div>

@@ -35,3 +35,13 @@
 .pageTitle{
     padding-top: 15px;
 }
+
+.stickyMenu{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 10px;
+
+}

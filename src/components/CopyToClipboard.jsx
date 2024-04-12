@@ -1,6 +1,6 @@
 import styles from "@/styles/copyToClipboard.module.css";
 
-export default function CopyToClipboard({ onClick }) {
+export default function CopyToClipboard({ copyFunction }) {
    const copyToClipboard = () => {
       const quoteText = document.getElementById("quote-text").innerText;
 
@@ -25,7 +25,7 @@ export default function CopyToClipboard({ onClick }) {
    };
    return (
       <>
-         <button className={styles.copyButton} onClick={copyToClipboard}>
+         <button className={styles.copyButton} onClick={copyFunction}>
             Copy To Clipboard
          </button>
       </>
