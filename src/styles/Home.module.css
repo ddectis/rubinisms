@@ -97,13 +97,18 @@
 
 .mainMenuButtons{
    border: 1px solid black;
-   padding: 20px;
+   padding: 12px;
    background-color: #2b223e;
    color: white;
    width: 75%;
    text-align: center;
    margin-block: 5px;
    border-radius: 10px;
+   margin: 5px;
+   display: flex;
+   align-items: center;
+   z-index: 1000;
+   justify-content: center;
 }
 
 .description p {
