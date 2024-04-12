@@ -127,7 +127,7 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
             actionOnDismissRight();
          } else {
             slider?.classList.add(styles.dismissLeft);
-            actionOnDismissLeft();
+            actionOnDismissRight();
          }
 
          setPosition(0);

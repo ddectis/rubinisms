@@ -8,10 +8,12 @@
     width: 90%;
     border: 1px solid white;
     border-radius: 20px;
-    padding: 10px;
-    padding-block: 20px;
+    padding: 20px;
+    padding-block: 25px;
     margin-block: 10px;
     background: #312f56;
+    text-align: justify;
+    white-space: pre-wrap;
 }
 
 .quoteNumber{
