@@ -14,6 +14,8 @@
    display: flex;
    justify-content: center;
    min-height: 100vh;
+   opacity: 1;
+   transition: opacity 0.2s ease-in-out
 }
 
 .quoteIndex {
@@ -29,7 +31,8 @@
    border: 1px solid white;
    border-radius: 20px;
    padding-block: 30px;
-   background: #191919;
+   background: #312f56;
+   color: #ffffff;
    box-shadow: -1px 14px 20px 0px rgb(30, 30, 30);
    width: 95%;
 
@@ -121,6 +124,10 @@
 .card h2 {
    font-weight: 600;
    margin-bottom: 0.7rem;
+}
+
+.hideOnLoad{
+   opacity: 0;
 }
 
 .card p {

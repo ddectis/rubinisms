@@ -173,7 +173,7 @@ export default function Swipe({ content, actionOnDismiss, cardIndex }) {
                   position: "absolute",
                   transform: `translateX(${screenPosition}%)`,
                   top: 50,
-                  transition: "0.1s ease-in"
+                  transition: "0.1s ease-out"
                }}
                id={cardIndex}
             >

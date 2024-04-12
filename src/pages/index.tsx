@@ -15,9 +15,7 @@ const JsonParserComponent = () => {
    const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
    const [quoteIndex, setQuoteIndex] = useState(0);
    const [quotesLoaded, setQuotesLoaded] = useState(false);
-   const [lastIndexToLoad, setLastIndexToLoad] = useState(5);
-
-
+   const [lastIndexToLoad, setLastIndexToLoad] = useState(0);
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -39,12 +37,21 @@ const JsonParserComponent = () => {
 
 
    useEffect(() => {
+     
+      const removeHidefterLoad = (id: number) =>{
+         //console.log("Removing hide")
+         const divToRemove = document.getElementById(`quote-${id}`)
+         //console.log(divToRemove)
+         divToRemove?.classList.remove(`${styles.hideOnLoad}`)
+      }
+
       const firstFiveQuotes = quotes.slice(0, lastIndexToLoad);
       const templateOfQuotes = [];
+      console.log("first five shit,. Length: " + firstFiveQuotes.length)
       for (let i = 0; i < firstFiveQuotes.length; i++) {
          const quote = firstFiveQuotes[i];
          templateOfQuotes.push(
-            <div className={styles.quote} key={i}>
+            <div className={`${styles.quote} ${styles.hideOnLoad}`} key={i} id={`quote-${i}`}>
                <div className={styles.quoteText}>
                   <div className={styles.quoteHeading}>
                      <h2>Rubinisms</h2>
@@ -56,8 +63,13 @@ const JsonParserComponent = () => {
                </div>
             </div>
          );
+
+         setTimeout(() => removeHidefterLoad(i),400)
       }
+      
+      
       setQuoteTemplates(templateOfQuotes)
+      console.log(quoteTemplates)
    }, [quotes, lastIndexToLoad]);
 
    useEffect(() => {
@@ -74,6 +86,7 @@ const JsonParserComponent = () => {
          // Check if quotes are loaded before accessing them
          setQuoteIndex(Math.floor(Math.random() * quotes.length));
          setLastIndexToLoad(lastIndexToLoad + 1)
+         //appendNewQuoteToArray();
          setQuotesLoaded(true);
          window.scrollTo({
             top: 0,
@@ -108,12 +121,35 @@ const JsonParserComponent = () => {
       console.log("Copying to clipboard");
    };
 
+   const appendNewQuoteToArray = () => {
+      console.log(
+         "appending new quote to array. Last Index: " + lastIndexToLoad
+      );
+      //const updatedTemplates = quoteTemplates.slice(0, -1);
+      //setQuoteTemplates(updatedTemplates);
+      const newQuote = (
+         <div className={`${styles.quote} ${styles.hideOnLoad}`} key={lastIndexToLoad}> id={lastIndexToLoad}
+            <div className={styles.quoteText}>
+               <div className={styles.quoteHeading}>
+                  <h2>Rubinismssss</h2>
+                  <h3 className={styles.quoteIndex}>
+                     {lastIndexToLoad} of {quotes.length}
+                  </h3>
+               </div>
+               <p id="quote-text">{quotes[lastIndexToLoad].text}</p>
+            </div>
+         </div>
+      );
+      console.log(newQuote)
+      setQuoteTemplates([newQuote, ...quoteTemplates]);
+      
+   };
+
    return (
       <div className={styles.main}>
          {quotesLoaded ? (
             <>
                {quoteTemplates.map((template, index) => {
-                  index++;
                   return (
                      <Swipe
                         key={index}
