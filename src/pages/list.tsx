@@ -33,12 +33,13 @@ export default function List() {
 
    return (
       <div className={styles.content}>
-         <h1>The Full List</h1>
+         <h2>The List of Rubinisms</h2>
          <input
+            className={styles.searchField}
             type="text"
             value={inputValue}
             onChange={handleChange}
-            placeholder="Search quotes..."
+            placeholder="Filter..."
          />
 
          {filteredQuotes.map((quote, index) => (
