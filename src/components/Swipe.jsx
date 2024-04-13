@@ -110,13 +110,27 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
       if (Math.abs(swipeDistance) > swipeThreshold) {
          console.log("swipe threshold exceeded");
 
+         const handleRespawn = () => {
+            parentElement = slider.parentNode;
+            parentElement.classList.remove(styles.hide)
+         }
+
          //hide the parent of the swipe element after 1 second
          //this allows the user to swipe the next card underneath
          const handleDismiss = () => {
             console.log("adding hide")
             parentElement = slider.parentNode;
-            parentElement.classList.add(styles.hide);
+            if(slider.classList.contains(styles.dismissRight)){
+               slider.classList.remove(styles.dismissRight)
+            }
+            if(slider.classList.contains(styles.dismissLeft)){
+               slider.classList.remove(styles.dismissLeft)
+            }
+            //parentElement.classList.add(styles.hide);
+            //setTimeout(handleRespawn, 500)
          };
+
+         
 
          //slider?.classList.add(styles.opacityHardCut)
 

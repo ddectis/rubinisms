@@ -14,6 +14,7 @@ interface Quote {
 const JsonParserComponent = () => {
    const [quotes, setQuotes] = useState<Quote[]>([]);
    const [quoteTemplates, setQuoteTemplates] = useState<ReactNode[]>([]);
+   const [quoteTemplate, setQuoteTemplate] = useState<ReactNode>();
    const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
    const [quoteIndex, setQuoteIndex] = useState(0);
    const [quotesLoaded, setQuotesLoaded] = useState(false);
@@ -41,6 +42,40 @@ const JsonParserComponent = () => {
 
       loadJsonFile();
    }, []); // Empty dependency array ensures it runs only once on mount
+
+   useEffect(() => {
+      const removeHidefterLoad = (id: number) => {
+         //console.log("Removing hide")
+         const divToRemove = document.getElementById(`quote-${id}`);
+         //console.log(divToRemove)
+         divToRemove?.classList.remove(`${styles.hideOnLoad}`);
+      };
+
+      if (quotesLoaded) {
+         const quote = quotes[lastIndexToLoad].text;
+         const template = (
+            <div
+               className={`${styles.quote} ${styles.hideOnLoad}`}
+               key={lastIndexToLoad}
+               id={`quote-${lastIndexToLoad}`}
+            >
+               <div className={styles.quoteText}>
+                  <div className={styles.quoteHeading}>
+                     <h2>Rubinisms</h2>
+                     <h3 className={styles.quoteIndex}>
+                        {lastIndexToLoad} of {quotes.length}
+                     </h3>
+                  </div>
+                  <p id="quote-text">{quote}</p>
+               </div>
+            </div>
+         );
+         setQuoteTemplate(template)
+         setTimeout(() => removeHidefterLoad(lastIndexToLoad), 400);
+      }
+
+      
+   }, [lastIndexToLoad]);
 
    useEffect(() => {
       //quotes start with 0 opacity, removing the hideOneLoad class will make them visible
@@ -236,9 +271,9 @@ const JsonParserComponent = () => {
                   </Link>
                </div>
                <div className={styles.sliderHolder}>
-               <ToggleSlider onToggle={handleShuffleChange} /> Enable Shuffle
+                  <ToggleSlider onToggle={handleShuffleChange} /> Enable Shuffle
                </div>
-               {quoteTemplates.map((template, index) => {
+               {/* {quoteTemplates.map((template, index) => {
                   return (
                      <Swipe
                         key={index}
@@ -248,7 +283,13 @@ const JsonParserComponent = () => {
                         cardIndex={index}
                      />
                   );
-               })}
+               })} */}
+               <Swipe
+                  content={quoteTemplate}
+                  actionOnDismissRight={getNextQuote}
+                  actionOnDismissLeft={getPreviousQuote}
+                  cardIndex={lastIndexToLoad}
+               />
             </>
          ) : (
             <>
