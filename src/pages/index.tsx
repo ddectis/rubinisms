@@ -70,11 +70,9 @@ const JsonParserComponent = () => {
                </div>
             </div>
          );
-         setQuoteTemplate(template)
+         setQuoteTemplate(template);
          setTimeout(() => removeHidefterLoad(lastIndexToLoad), 400);
       }
-
-      
    }, [lastIndexToLoad]);
 
    useEffect(() => {
@@ -216,9 +214,6 @@ const JsonParserComponent = () => {
 
       // Remove the textarea from the body
       document.body.removeChild(textarea);
-
-      // Alert or show a notification indicating the text has been copied
-      alert(`Copied "${quoteText}"`);
    };
 
    const appendNewQuoteToArray = () => {
@@ -258,21 +253,27 @@ const JsonParserComponent = () => {
       <div className={styles.main}>
          {quotesLoaded ? (
             <>
-               <div className={styles.menu}>
-                  <CopyToClipboard copyFunction={copyCurrentQuoteToClipboard} />
-                  {/* <button
+               <div className={styles.outerMenu}>
+                  <div className={styles.menu}>
+                     <CopyToClipboard
+                        copyFunction={copyCurrentQuoteToClipboard}
+                     />
+                     {/* <button
                      className={styles.randomButton}
                      onClick={startFromRandom}
                   >
                      Get Random Quote
                   </button> */}
-                  <Link href="/list" className={styles.mainMenuButtons}>
-                     Browse / Search List
-                  </Link>
+                     <Link href="/list" className={styles.mainMenuButtons}>
+                        Browse / Search List
+                     </Link>
+                  </div>
+                  <div className={styles.sliderHolder}>
+                     <ToggleSlider onToggle={handleShuffleChange} />{" "}
+                     <p className={styles.enableShuffleLabel}>Enable Shuffle</p>
+                  </div>
                </div>
-               <div className={styles.sliderHolder}>
-                  <ToggleSlider onToggle={handleShuffleChange} /> Enable Shuffle
-               </div>
+
                {/* {quoteTemplates.map((template, index) => {
                   return (
                      <Swipe

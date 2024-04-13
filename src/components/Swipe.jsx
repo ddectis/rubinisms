@@ -192,7 +192,7 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
                style={{
                   position: "absolute",
                   transform: `translateX(${screenPosition}%)`,
-                  top: 100,
+                  top: 150,
                   transition: "0.1s ease-out"
                }}
                id={cardIndex}
