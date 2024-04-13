@@ -19,7 +19,7 @@
     left: 0;
     right: 0;
     bottom: 3px;
-    background-color: #ccc;
+    background-color: #6b6b6b;
     transition: .4s;
     border-radius: 50px;
     display: flex;
@@ -32,13 +32,13 @@
     height: 58%;
     width: 34%;
     left: 7px;
-    background-color: black;
+    background-color: rgb(208, 206, 206);
     transition: .4s;
     border-radius: 50px;
   }
   
   input:checked + .slider {
-    background-color: #4CAF50;
+    background-color: #0062048c;
   }
   
   input:focus + .slider {
