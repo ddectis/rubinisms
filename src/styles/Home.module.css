@@ -155,9 +155,10 @@
 .sliderHolder{
    display: flex;
    align-items: center;
-   width: 52%;
+   max-width: 300px;
    justify-content: space-around;
    margin-top: 5px;
+   width: 70%;
 }
 
 .card span {
