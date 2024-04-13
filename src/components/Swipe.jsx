@@ -119,15 +119,19 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
          };
 
          //slider?.classList.add(styles.opacityHardCut)
+
+         const takeDismissalAction = () =>{
+            actionOnDismissRight();
+         }
          
          setTimeout(handleDismiss, 500) 
          if (swipeDistance > 0) {
             //console.log("dismissing right")
             slider?.classList.add(styles.dismissRight);
-            actionOnDismissRight();
+            setTimeout(takeDismissalAction, 250)            
          } else {
             slider?.classList.add(styles.dismissLeft);
-            actionOnDismissRight();
+            setTimeout(takeDismissalAction, 250)            
          }
 
          setPosition(0);
@@ -174,7 +178,7 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
                style={{
                   position: "absolute",
                   transform: `translateX(${screenPosition}%)`,
-                  top: 50,
+                  top: 100,
                   transition: "0.1s ease-out"
                }}
                id={cardIndex}
@@ -185,41 +189,3 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
       </>
    );
 }
-
-const holder = () => {
-   return (
-      <>
-         <div
-            className={styles.content}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchStop}
-         >
-            <div
-               className={`${styles.opacityTransition} ${styles.fadeIn}`}
-               style={{
-                  position: "absolute",
-                  transform: `translateX(${screenPosition}%)`,
-                  top: 50,
-               }}
-               id="slider"
-            >
-               <div className={homeStyles.quote}>
-                  <div className={homeStyles.quoteText}>
-                     <div className={homeStyles.quoteHeading}>
-                        <h2>Rubinisms</h2>
-                        <h3 className={homeStyles.quoteIndex}>
-                           {quoteIndex} of {quotes.length}
-                        </h3>
-                     </div>
-                     {selectedQuote && <p>{selectedQuote.text}</p>}
-                  </div>
-               </div>
-            </div>
-         </div>
-      </>
-   );
-};

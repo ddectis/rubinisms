@@ -152,6 +152,14 @@
    transition: background 200ms, border 200ms;
 }
 
+.sliderHolder{
+   display: flex;
+   align-items: center;
+   width: 52%;
+   justify-content: space-around;
+   margin-top: 5px;
+}
+
 .card span {
    display: inline-block;
    transition: transform 200ms;

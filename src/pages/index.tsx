@@ -5,6 +5,7 @@ import NavButtons from "@/components/NavButtons";
 import Swipe from "@/components/Swipe";
 import CopyToClipboard from "@/components/CopyToClipboard";
 import Link from "next/link";
+import ToggleSlider from "@/components/ToggleSlider";
 
 interface Quote {
    text: string;
@@ -18,6 +19,10 @@ const JsonParserComponent = () => {
    const [quotesLoaded, setQuotesLoaded] = useState(false);
    const [lastIndexToLoad, setLastIndexToLoad] = useState(0);
    const [firstIndexToLoad, setFirstIndexToLoad] = useState(0);
+   //swipe through sequentially if false, shuffle randomly if true
+   const [shuffleCards, setShuffleCards] = useState(false);
+
+   let loadedQuotes: Quote[] = [];
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -38,19 +43,30 @@ const JsonParserComponent = () => {
    }, []); // Empty dependency array ensures it runs only once on mount
 
    useEffect(() => {
+      //quotes start with 0 opacity, removing the hideOneLoad class will make them visible
+      //method is called in the FOR loop lower in this useEffect hook
       const removeHidefterLoad = (id: number) => {
          //console.log("Removing hide")
          const divToRemove = document.getElementById(`quote-${id}`);
          //console.log(divToRemove)
          divToRemove?.classList.remove(`${styles.hideOnLoad}`);
       };
-
-      const firstFiveQuotes = quotes.slice(firstIndexToLoad, lastIndexToLoad);
+      console.log(
+         "loading quotes from " + firstIndexToLoad + " to " + lastIndexToLoad
+      );
+      console.log("Loaded Quotes Pre: ", loadedQuotes);
+      const firstFiveQuotes: Quote[] = quotes.slice(
+         firstIndexToLoad,
+         lastIndexToLoad
+      );
+      loadedQuotes = [...firstFiveQuotes, ...loadedQuotes];
+      console.log("Loaded Quotes Post: ", loadedQuotes);
       const templateOfQuotes = [];
+
       console.log("first five shit,. Length: " + firstFiveQuotes.length);
       console.log(firstFiveQuotes[0]);
-      for (let i = 0; i < firstFiveQuotes.length; i++) {
-         const quote = firstFiveQuotes[i];
+      for (let i = 0; i < loadedQuotes.length; i++) {
+         const quote = loadedQuotes[i];
          templateOfQuotes.push(
             <div
                className={`${styles.quote} ${styles.hideOnLoad}`}
@@ -89,7 +105,15 @@ const JsonParserComponent = () => {
       if (quotes.length > 0) {
          // Check if quotes are loaded before accessing them
          setQuoteIndex(Math.floor(Math.random() * quotes.length));
-         setLastIndexToLoad(lastIndexToLoad + 1);
+         if (!shuffleCards) {
+            setLastIndexToLoad(lastIndexToLoad + 1);
+         } else {
+            const rnd = Math.floor(Math.random() * quotes.length);
+            console.log("Rnd: " + rnd);
+            setFirstIndexToLoad(rnd - 2);
+            setLastIndexToLoad(rnd);
+         }
+
          //appendNewQuoteToArray();
          setQuotesLoaded(true);
          window.scrollTo({
@@ -140,7 +164,7 @@ const JsonParserComponent = () => {
 
    const copyCurrentQuoteToClipboard = () => {
       console.log("Copying to clipboard");
-      const quoteText = quotes[lastIndexToLoad -1].text
+      const quoteText = quotes[lastIndexToLoad - 1].text;
 
       // Create a textarea element to hold the text temporarily
       const textarea = document.createElement("textarea");
@@ -190,6 +214,11 @@ const JsonParserComponent = () => {
       setQuoteTemplates([newQuote, ...quoteTemplates]);
    };
 
+   const handleShuffleChange = (value: boolean) => {
+      console.log("Handling shuffle change. Setting to: " + value);
+      setShuffleCards(value);
+   };
+
    return (
       <div className={styles.main}>
          {quotesLoaded ? (
@@ -205,6 +234,9 @@ const JsonParserComponent = () => {
                   <Link href="/list" className={styles.mainMenuButtons}>
                      Browse / Search List
                   </Link>
+               </div>
+               <div className={styles.sliderHolder}>
+               <ToggleSlider onToggle={handleShuffleChange} /> Enable Shuffle
                </div>
                {quoteTemplates.map((template, index) => {
                   return (
