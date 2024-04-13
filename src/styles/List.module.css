@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+.contentHolder{
+    display: flex;
+    justify-content: center;
+}
+
 .quoteCard{
     width: 90%;
     border: 1px solid white;
@@ -45,4 +50,10 @@
     background: #211a2f;
     top: 0;
     padding: 10px
+}
+
+@media (min-width: 500px) {
+    .content{
+        width:66%
+    }
 }

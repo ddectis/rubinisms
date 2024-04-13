@@ -22,6 +22,7 @@ const JsonParserComponent = () => {
    const [firstIndexToLoad, setFirstIndexToLoad] = useState(0);
    //swipe through sequentially if false, shuffle randomly if true
    const [shuffleCards, setShuffleCards] = useState(false);
+   const [isShuffleChecked, setisShuffleChecked] = useState(false)
 
    let loadedQuotes: Quote[] = [];
 
@@ -249,6 +250,11 @@ const JsonParserComponent = () => {
       setShuffleCards(value);
    };
 
+   const handleSliderHolderClick = () => {   
+      setisShuffleChecked(!isShuffleChecked)
+      console.log("slider div click")
+   }
+
    return (
       <div className={styles.main}>
          {quotesLoaded ? (
@@ -268,8 +274,11 @@ const JsonParserComponent = () => {
                         Browse / Search List
                      </Link>
                   </div>
-                  <div className={styles.sliderHolder}>
-                     <ToggleSlider onToggle={handleShuffleChange} />{" "}
+                  <div className={styles.sliderHolder} onClick={handleSliderHolderClick}>
+                     <ToggleSlider 
+                     onToggle={handleShuffleChange}
+                     isShuffleChecked={isShuffleChecked}
+                     setIsShuffleChecked={setisShuffleChecked} />{" "}
                      <p className={styles.enableShuffleLabel}>Enable Shuffle</p>
                   </div>
                </div>

@@ -33,7 +33,7 @@ export default function List() {
    );
 
    return (
-      <div className={styles.content}>
+      <>
          <div className={styles.stickyMenu}>
             <Link href="/" className={styles.mainMenuButtons}>
                Go Home
@@ -48,13 +48,20 @@ export default function List() {
                placeholder="Filter / Search"
             />
          </div>
-
-         {filteredQuotes.map((quote, index) => (
-            <div className={styles.quoteCard} key={index} id={index.toString()}>
-               <h3 className={styles.quoteNumber}>#{index}</h3>
-               <p>{quote.text}</p>
+         <div className={styles.contentHolder}>
+            <div className={styles.content}>
+               {filteredQuotes.map((quote, index) => (
+                  <div
+                     className={styles.quoteCard}
+                     key={index}
+                     id={index.toString()}
+                  >
+                     <h3 className={styles.quoteNumber}>#{index}</h3>
+                     <p>{quote.text}</p>
+                  </div>
+               ))}
             </div>
-         ))}
-      </div>
+         </div>
+      </>
    );
 }

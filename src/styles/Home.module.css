@@ -29,7 +29,7 @@
 .quoteText {
    padding-inline: 20px;
    text-align: justify;
-   line-height: 2em;
+   line-height: 1.5em;
    font-size: 1.2em;
    border: 1px solid white;
    border-radius: 20px;
@@ -38,7 +38,6 @@
    color: #f1f1f1;
    box-shadow: -1px 14px 20px 0px rgb(30, 30, 30);
    width: 95%;
-
 }
 
 .menu {
@@ -141,6 +140,11 @@
    font-size: 1em;
    text-align: justify;
    padding: 20px;
+   
+}
+
+.introContainer{
+   padding-top: 15px;
 }
 
 .code {
@@ -240,6 +244,9 @@
    position: relative;
 }
 
+@media only screen and (min-width: 600px){
+}
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
    .card:hover {
@@ -265,9 +272,13 @@
    }
 
    .intro {
-      padding: 100px;
-      font-size: 1.5em;
-      width: 75%
+      padding: 20px;
+      font-size: 1.2em;
+      width: 100%
+   }
+
+   .introContainer{
+      width: 50%;
    }
 
    .quoteText {
