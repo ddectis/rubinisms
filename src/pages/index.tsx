@@ -22,7 +22,7 @@ const JsonParserComponent = () => {
    const [firstIndexToLoad, setFirstIndexToLoad] = useState(0);
    //swipe through sequentially if false, shuffle randomly if true
    const [shuffleCards, setShuffleCards] = useState(false);
-   const [isShuffleChecked, setisShuffleChecked] = useState(false)
+   const [isShuffleChecked, setisShuffleChecked] = useState(false);
 
    let loadedQuotes: Quote[] = [];
 
@@ -135,7 +135,7 @@ const JsonParserComponent = () => {
    }, [quoteIndex]);
 
    const getNextQuote = () => {
-      console.log("Geting next Quote");
+      console.log("Geting next Quote. Shuffle: " + shuffleCards);
       if (quotes.length > 0) {
          // Check if quotes are loaded before accessing them
          setQuoteIndex(Math.floor(Math.random() * quotes.length));
@@ -250,10 +250,15 @@ const JsonParserComponent = () => {
       setShuffleCards(value);
    };
 
-   const handleSliderHolderClick = () => {   
-      setisShuffleChecked(!isShuffleChecked)
-      console.log("slider div click")
-   }
+   const handleSliderHolderClick = () => {
+      if (isShuffleChecked) {
+         setisShuffleChecked(false);
+      } else {
+         setisShuffleChecked(true);
+      }
+      setShuffleCards(isShuffleChecked);
+      console.log("slider div click. Shuffle Checked: " + shuffleCards);
+   };
 
    return (
       <div className={styles.main}>
@@ -274,13 +279,13 @@ const JsonParserComponent = () => {
                         Browse / Search List
                      </Link>
                   </div>
-                  <div className={styles.sliderHolder} onClick={handleSliderHolderClick}>
-                     <ToggleSlider 
+                  <ToggleSlider
                      onToggle={handleShuffleChange}
                      isShuffleChecked={isShuffleChecked}
-                     setIsShuffleChecked={setisShuffleChecked} />{" "}
-                     <p className={styles.enableShuffleLabel}>Enable Shuffle</p>
-                  </div>
+                     setIsShuffleChecked={setisShuffleChecked}
+                     shuffleCards={shuffleCards}
+                     setShuffleCards={setShuffleCards}
+                  />
                </div>
 
                {/* {quoteTemplates.map((template, index) => {
