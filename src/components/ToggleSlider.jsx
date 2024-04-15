@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import styles from "@/styles/ToggleSlider.module.css";
 
 export default function ToggleSlider({
-   onToggle,
-   isShuffleChecked,
-   setIsShuffleChecked,
    shuffleCards,
    setShuffleCards
 }) {
@@ -15,8 +12,6 @@ export default function ToggleSlider({
    
    const handleToggle = (event) => {
       setShuffleCards(shuffleCards => !shuffleCards)
-      
-      //onToggle(event.target.checked);
    };
 
    return (
