@@ -20,8 +20,9 @@ export default function Intro() {
             So I put together this page to share those quotes with my friends. I
             hope you find them similarly inspirational. And, get the book. Read
             it.
-            <br />
-            <br />- Dan
+            <div className={styles.signatureHolder}>
+               <img className={styles.signature} src="signature.png"></img>
+            </div>
          </p>
       </div>
    );

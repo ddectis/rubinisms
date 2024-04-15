@@ -80,6 +80,16 @@
    ;
 }
 
+.signatureHolder{
+   display: flex;
+   justify-content: center;
+}
+
+.signature{
+   width: 30%;
+   display: flex;
+}
+
 .navButtonHolder {
    display: flex;
    flex-direction: row;
