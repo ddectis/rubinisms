@@ -1,0 +1,35 @@
+.toolTip {
+    position: absolute;
+    bottom: 10%;
+    padding: 40px;
+    background-color: rgb(184, 148, 219);
+    outline: 3px solid white;
+    border-radius: 10px;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 75%;
+    max-width: 500px;
+    box-shadow: 0 0 black;
+    font-size: 1em;
+    text-align: center;
+    pointer-events: none;
+    z-index: 10000;
+    transition: opacity 1s;
+}
+
+.flipped {
+    transform: rotate(180deg);
+}
+
+.hide{
+    opacity: 0;
+}
+
+@media (min-width: 500px) {
+    .toolTip {
+        font-size: 2em;
+    }
+
+}

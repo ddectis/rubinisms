@@ -2,7 +2,13 @@ import styles from "@/styles/Swipe.module.css";
 import homeStyles from "@/styles/Home.module.css";
 import React, { useState, useEffect, MouseEvent } from "react";
 
-export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRight, cardIndex }) {
+export default function Swipe({
+   content,
+   actionOnDismissLeft,
+   actionOnDismissRight,
+   cardIndex,
+   setInitialSwipeDetected,
+}) {
    //position is actually used to measure the swipe distance
    const [position, setPosition] = useState(0);
    //screen position is a percent that starts at 0 and feeds the transformX css property
@@ -22,13 +28,14 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
       const midPoint = screenWidth / 2;
       setInitialX(midPoint);
       //setPosition(midPoint);
-      setSwipeThreshold(screenWidth * 0.20);
+      setSwipeThreshold(screenWidth * 0.2);
       console.log("Doing initial setup. Width:" + screenWidth);
       slider = document.getElementById(cardIndex);
    }, []);
 
    const handleMouseMove = (event) => {
       if (mouseDown) {
+         setInitialSwipeDetected(true)
          event.preventDefault();
          console.log("Mousedown: " + mouseDown);
          setPosition(event.clientX - initalMousePosition);
@@ -65,6 +72,7 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
       if (touch) {
          // console.log("Touch Move. Position: " + touch.clientX);
          setPosition(touch.clientX - initialTouchPosition);
+         setInitialSwipeDetected(true)
          // console.log(
          //    "Position: " +
          //       position +
@@ -112,40 +120,38 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
 
          const handleRespawn = () => {
             parentElement = slider.parentNode;
-            parentElement.classList.remove(styles.hide)
-         }
+            parentElement.classList.remove(styles.hide);
+         };
 
          //hide the parent of the swipe element after 1 second
          //this allows the user to swipe the next card underneath
          const handleDismiss = () => {
-            console.log("adding hide")
+            console.log("adding hide");
             parentElement = slider.parentNode;
-            if(slider.classList.contains(styles.dismissRight)){
-               slider.classList.remove(styles.dismissRight)
+            if (slider.classList.contains(styles.dismissRight)) {
+               slider.classList.remove(styles.dismissRight);
             }
-            if(slider.classList.contains(styles.dismissLeft)){
-               slider.classList.remove(styles.dismissLeft)
+            if (slider.classList.contains(styles.dismissLeft)) {
+               slider.classList.remove(styles.dismissLeft);
             }
             //parentElement.classList.add(styles.hide);
             //setTimeout(handleRespawn, 500)
          };
 
-         
-
          //slider?.classList.add(styles.opacityHardCut)
 
-         const takeDismissalAction = () =>{
+         const takeDismissalAction = () => {
             actionOnDismissRight();
-         }
-         
-         setTimeout(handleDismiss, 500) 
+         };
+
+         setTimeout(handleDismiss, 500);
          if (swipeDistance > 0) {
             //console.log("dismissing right")
             slider?.classList.add(styles.dismissRight);
-            setTimeout(takeDismissalAction, 250)            
+            setTimeout(takeDismissalAction, 250);
          } else {
             slider?.classList.add(styles.dismissLeft);
-            setTimeout(takeDismissalAction, 250)            
+            setTimeout(takeDismissalAction, 250);
          }
 
          setPosition(0);
@@ -169,7 +175,6 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
          grandParent.removeChild(parentElement);
       }
       setScreenPosition(0);
-     
    };
 
    const calculateScreenPosition = () => {
@@ -193,7 +198,7 @@ export default function Swipe({ content, actionOnDismissLeft, actionOnDismissRig
                   position: "absolute",
                   transform: `translateX(${screenPosition}%)`,
                   top: 150,
-                  transition: "0.1s ease-out"
+                  transition: "0.1s ease-out",
                }}
                id={cardIndex}
             >

@@ -5,6 +5,7 @@ import Swipe from "@/components/Swipe";
 import CopyToClipboard from "@/components/CopyToClipboard";
 import Link from "next/link";
 import ToggleSlider from "@/components/ToggleSlider";
+import ArrowTooltip from "@/components/ArrowTooltip";
 
 interface Quote {
    text: string;
@@ -17,6 +18,7 @@ const JsonParserComponent = () => {
    const [quoteIndex, setQuoteIndex] = useState(0);
    //swipe through sequentially if false, shuffle randomly if true
    const [shuffleCards, setShuffleCards] = useState(false);
+   const [initialSwipeDetected, setInitialSwipeDetected] = useState(false);
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -73,7 +75,7 @@ const JsonParserComponent = () => {
          } else {
             const rnd = Math.floor(Math.random() * quotes.length);
             console.log("Rnd: " + rnd);
-            
+
             setQuoteIndex(rnd);
          }
 
@@ -100,8 +102,8 @@ const JsonParserComponent = () => {
    const startFromRandom = () => {
       const rnd = Math.floor(Math.random() * quotes.length);
       console.log("Rnd " + rnd);
-      setShuffleCards(true)
-      
+      setShuffleCards(true);
+
       setQuoteIndex(rnd + 1);
       setQuotesLoaded(true);
    };
@@ -145,11 +147,13 @@ const JsonParserComponent = () => {
                      setShuffleCards={setShuffleCards}
                   />
                </div>
+               <ArrowTooltip initialSwipeDetected={initialSwipeDetected} />
                <Swipe
                   content={quoteTemplate}
                   actionOnDismissRight={getNextQuote}
                   actionOnDismissLeft={getPreviousQuote}
                   cardIndex={quoteIndex}
+                  setInitialSwipeDetected={setInitialSwipeDetected}
                />
             </>
          ) : (
