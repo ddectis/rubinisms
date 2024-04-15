@@ -1,7 +1,6 @@
 import { useState, useEffect, ReactNode } from "react";
 import styles from "@/styles/Home.module.css";
 import Intro from "@/components/Intro";
-import NavButtons from "@/components/NavButtons";
 import Swipe from "@/components/Swipe";
 import CopyToClipboard from "@/components/CopyToClipboard";
 import Link from "next/link";
@@ -18,8 +17,6 @@ const JsonParserComponent = () => {
    const [quoteIndex, setQuoteIndex] = useState(0);
    //swipe through sequentially if false, shuffle randomly if true
    const [shuffleCards, setShuffleCards] = useState(false);
-
-   let loadedQuotes: Quote[] = [];
 
    useEffect(() => {
       const loadJsonFile = async () => {
@@ -53,7 +50,7 @@ const JsonParserComponent = () => {
             >
                <div className={styles.quoteText}>
                   <div className={styles.quoteHeading}>
-                     <h2>Rubinisms</h2>
+                     <h2>Rubinism</h2>
                      <h3 className={styles.quoteIndex}>
                         {quoteIndex} of {quotes.length}
                      </h3>
@@ -128,11 +125,6 @@ const JsonParserComponent = () => {
 
       // Remove the textarea from the body
       document.body.removeChild(textarea);
-   };
-
-   const handleShuffleChange = (value: boolean) => {
-      console.log("Handling shuffle change. Setting to: " + value);
-      setShuffleCards(value);
    };
 
    return (
